@@ -21,6 +21,7 @@ export default {
       { src: '/js/popper/1.15.0/popper.min.js' },
       { src: '/js/bootstrap/4.3.1/bootstrap.min.js' },
       { src: '/js/coreui.min.js' },
+      { src: '/js/fontawesome/fontawesome-3653f64de2.js' }
     ]
   },
   /*
