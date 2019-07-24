@@ -13,7 +13,7 @@
                     <div role="group" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
-                          <i class="icon-user"></i>
+                          <i class="fas fa-user"></i>
                         </div>
                       </div>
                       <input
@@ -29,7 +29,7 @@
                     <div role="group" class="input-group mb-4">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
-                          <i class="icon-lock"></i>
+                          <i class="fas fa-key"></i>
                         </div>
                       </div>
                       <input
@@ -52,7 +52,7 @@
                         <button type="button" class="btn px-0 btn-link">¿Has olvidado tu contraseña?</button>
                       </div>
                       <div class="text-center d-lg-none d-xl-none">
-                        <button type="button" class="btn px-0 btn-link">¡Regístrate ahora!</button>
+                        <button type="button" @click="registro" class="btn px-0 btn-link">¡Regístrate ahora!</button>
                       </div>
                     </div>
                   </form>
@@ -65,7 +65,7 @@
                     <p
                       class="mt-4"
                     >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <button type="button" class="btn active mt-3 btn-primary">¡Regístrate ahora!</button>
+                    <button type="button" @click="registro" class="btn active mt-3 btn-primary">¡Regístrate ahora!</button>
                   </div>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export default {
           iconPack: 'fontawesome',
           icon : 'check'
         })
-        self.$router.push('/')
+        self.$router.push('/tablero/inicio')
       })
 
       .catch(function (e) {
@@ -140,15 +140,31 @@ export default {
           console.log(error.name)
           console.log(error.message)
           console.log(error.details)
-          self.$toast.error('Error verifique sus datos', {
-            duration: 3500,
-            iconPack: 'fontawesome',
-            icon : 'times'
-          })
+
+          if (error.code == 'LOGIN_FAILED_EMAIL_NOT_VERIFIED') {
+            self.$toast.error('Cuenta no verificada, un link de confirmacion fue enviado a su email', {
+              duration: 10000,
+              iconPack: 'fontawesome',
+              icon : 'times'
+            })
+          }
+
+          if (error.code == 'LOGIN_FAILED') {
+            self.$toast.error('Login invalido, verifique sus datos', {
+              duration: 3500,
+              iconPack: 'fontawesome',
+              icon : 'times'
+            })
+          }
+
         } else {
           console.log(e)
         }
       })      
+    },
+
+    registro(params) {
+      this.$router.push('/auth/registro')
     }
   }
 };
