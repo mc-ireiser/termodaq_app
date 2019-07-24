@@ -57,7 +57,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" @click="logout">
               <a class="nav-link" href="#">
                 <i class="fas fa-sign-out-alt"></i> Salir
               </a>
@@ -116,7 +116,65 @@
 </template>
 
 <script>
-export default {};
+export default {
+
+  mounted() {
+    let token = localStorage.getItem("token")
+    if (!token) {
+      this.$router.push('/auth/login')
+    }
+  },
+
+  methods: {
+    logout(params) {
+      let env = require('~/const/env.json');
+      let url = env.api_host + '/usuario/logout'
+      let token = localStorage.getItem("token")
+      let self = this
+
+      this.$axios({
+        method: 'post',
+        url: url,
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+        params: {
+          access_token: token
+        },
+        withCredentials: false
+      })
+
+      .then(function (response) {
+        localStorage.setItem("id", null)
+        localStorage.setItem("userId", null)
+        self.$router.push('/auth/login')
+      })
+
+      .catch(function (e) {
+        if (e.response) {
+          let error = e.response.data.error
+          let detalles = error.details
+          console.log(error.statusCode)
+          console.log(error.code)
+          console.log(error.name)
+          console.log(error.message)
+          console.log(error.details)
+
+          self.$toast.error('Error, no fue posible cerrar la sesión', {
+            duration: 10000,
+            iconPack: 'fontawesome',
+            icon : 'times'
+          })
+
+        } else {
+          console.log(e)
+        }
+      })
+    }
+  }
+};
 </script>
 
 

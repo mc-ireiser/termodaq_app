@@ -121,7 +121,7 @@ export default {
       })
 
       .then(function (response) {
-        localStorage.setItem("id", response.data.id)
+        localStorage.setItem("token", response.data.id)
         localStorage.setItem("userId", response.data.userId)
         self.$toast.success('Bienvenido', {
           duration: 3500,
