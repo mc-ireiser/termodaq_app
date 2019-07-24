@@ -1,8 +1,5 @@
 <template>
   <div>
-    <noscript>
-      <strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
     <div class="app flex-row align-items-center">
       <div class="container">
         <div class="row justify-content-center">
@@ -10,7 +7,7 @@
             <div class="card-group">
               <div class="card p-4">
                 <div class="card-body">
-                  <form class>
+                  <form @submit.prevent="onSubmit">
                     <h1>Login</h1>
                     <p class="text-muted">Inicia sesión en tu cuenta</p>
                     <div role="group" class="input-group mb-3">
@@ -20,11 +17,13 @@
                         </div>
                       </div>
                       <input
+                        v-model="userData.username"
                         type="text"
                         placeholder="Usuario"
                         autocomplete="usuario email"
                         class="form-control form-control"
-                        id="__BVID__295"
+                        id="_usuario"
+                        required
                       />
                     </div>
                     <div role="group" class="input-group mb-4">
@@ -34,16 +33,18 @@
                         </div>
                       </div>
                       <input
+                        v-model="userData.password"
                         type="password"
                         placeholder="Contraseña"
                         autocomplete="current-password"
                         class="form-control form-control"
-                        id="__BVID__296"
+                        id="_password"
+                        required
                       />
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <button type="button" class="btn px-4 mb-2 btn-primary w-100">Entrar</button>
+                        <button type="submit" class="btn px-4 mb-2 btn-primary w-100">Entrar</button>
                       </div>
                     </div>
                     <div class="row">
@@ -77,7 +78,80 @@
 </template>
 
 <script>
-export default {};
+
+export default {
+  
+  data() {
+    return {
+      userData: {
+        username: "",
+        email: "",
+        password: ""
+      }
+    }
+  },
+
+  asyncData(context) {
+    return {
+      project: "SPC"
+    }
+  },
+
+  methods: {
+    onSubmit(params) {
+      let userData = this.userData
+      let env = require('~/const/env.json');
+      let url = env.api_host + '/usuario/login'
+      let self = this
+
+      this.$axios({
+        method: 'post',
+        url: url,
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false,
+        //credentials: 'same-origin',
+        data: {
+          username: userData.username,
+          password: userData.password
+        }
+      })
+
+      .then(function (response) {
+        localStorage.setItem("id", response.data.id)
+        localStorage.setItem("userId", response.data.userId)
+        self.$toast.success('Bienvenido', {
+          duration: 3500,
+          iconPack: 'fontawesome',
+          icon : 'check'
+        })
+        self.$router.push('/')
+      })
+
+      .catch(function (e) {
+        if (e.response) {
+          let error = e.response.data.error
+          let detalles = error.details
+          console.log(error.statusCode)
+          console.log(error.code)
+          console.log(error.name)
+          console.log(error.message)
+          console.log(error.details)
+          self.$toast.error('Error verifique sus datos', {
+            duration: 3500,
+            iconPack: 'fontawesome',
+            icon : 'times'
+          })
+        } else {
+          console.log(e)
+        }
+      })      
+    }
+  }
+};
 </script>
 
 <style scoped>
