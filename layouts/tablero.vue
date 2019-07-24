@@ -6,7 +6,7 @@
         <a class="d-flex" href="#">
           <img src="/img/png/termodaq_logo.png" alt="Logo termoDaQ" height="20">
         </a>
-        <button class="navbar-toggler sidebar-toggler" type="button" data-toggle="sidebar-show">
+        <button class="navbar-toggler sidebar-toggler d-lg-none d-xl-none" type="button" data-toggle="sidebar-show">
           <span class="navbar-toggler-icon"></span>
         </button>
       </nav>
@@ -104,7 +104,9 @@
       </div>
       <main class="main">
         <!-- Main content here -->
-        <nuxt/>
+        <div class="container-fluid my-4">
+          <nuxt/>
+        </div>
       </main>
     </div>
     <footer class="app-footer">
