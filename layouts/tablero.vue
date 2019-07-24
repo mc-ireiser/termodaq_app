@@ -50,11 +50,11 @@
                     <i class="fas fa-exchange-alt"></i> Cambiar
                   </a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                   <a class="nav-link" href="#">
                     <i class="fas fa-redo"></i> Restablecer
                   </a>
-                </li>
+                </li>-->
               </ul>
             </li>
             <li class="nav-item" @click="logout">
