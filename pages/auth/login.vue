@@ -49,7 +49,7 @@
                     </div>
                     <div class="row">
                       <div class="text-center col-6 col-lg-12 col-xl-12">
-                        <button type="button" class="btn px-0 btn-link">¿Has olvidado tu contraseña?</button>
+                        <button type="button" @click="restablecer" class="btn px-0 btn-link">¿Has olvidado tu contraseña?</button>
                       </div>
                       <div class="text-center d-lg-none d-xl-none">
                         <button type="button" @click="registro" class="btn px-0 btn-link">¡Regístrate ahora!</button>
@@ -64,7 +64,7 @@
                     <h2>¿Usuario Nuevo?</h2>
                     <p
                       class="mt-4"
-                    >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    >Para utilizar la plataforma usted necesita una cuenta de usuario, esto le permite respaldar y visualizar los muestreos que realice con su tarjeta termoDaQ.</p>
                     <button type="button" @click="registro" class="btn active mt-3 btn-primary">¡Regístrate ahora!</button>
                   </div>
                 </div>
@@ -165,6 +165,10 @@ export default {
 
     registro(params) {
       this.$router.push('/auth/registro')
+    },
+
+    restablecer(params) {
+      this.$router.push('/auth/restablecer')
     }
   }
 };
