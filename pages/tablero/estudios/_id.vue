@@ -28,25 +28,33 @@
               <p></p>
             </div>
 
-            <div class="card mx-4 pl-2">
-              <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="false"></Plotly>
-            </div>
+            <NoSsr placeholder="Cargando...">
 
-            <div class="card mx-4 pl-2">
-              <Plotly :data="aire" :layout="layoutAire" :display-mode-bar="false"></Plotly>
-            </div>
+              <div class="card mx-4 pl-2">
+                <Plotly :data="mapa" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
+              </div>
 
-            <div class="card mx-4 pl-2">
-              <Plotly :data="uv" :layout="layoutUv" :display-mode-bar="false"></Plotly>
-            </div>
+              <div class="card mx-4 pl-2">
+                <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="false"></Plotly>
+              </div>
 
-            <div class="card mx-4 pl-2">
-              <Plotly :data="presion" :layout="layoutPresion" :display-mode-bar="false"></Plotly>
-            </div>
+              <div class="card mx-4 pl-2">
+                <Plotly :data="aire" :layout="layoutAire" :display-mode-bar="false"></Plotly>
+              </div>
 
-            <div class="card mx-4 pl-2">
-              <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
-            </div>
+              <div class="card mx-4 pl-2">
+                <Plotly :data="uv" :layout="layoutUv" :display-mode-bar="false"></Plotly>
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <Plotly :data="presion" :layout="layoutPresion" :display-mode-bar="false"></Plotly>
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
+              </div>
+
+            </NoSsr>
 
             <div class="card mx-4">
               <table class="table table-hover">
@@ -96,19 +104,28 @@ export default {
     return {
       muestreo: [],
       ficha: {},
+      mapa: {
+        type:'scattermapbox',
+        lat:['45.5017'],
+        lon:['-73.5673'],
+        mode:'markers',
+        marker: {
+          size:14
+        }
+      },
       agua:[{
         x: [],
         y: [],
         type:"scatter",
         xlabel: 'tiempo',
-        name: 'Temp. (C) - Agua',
+        name: 'Temp. Agua (C)',
         showlegend: true
       }],
       aire:[{
         x: [],
         y: [],
         type:"scatter",
-        name: 'Temp. (C) - Aire',
+        name: 'Temp. Aire (C)',
         showlegend: true
       }],
       uv:[{
@@ -126,19 +143,46 @@ export default {
         showlegend: true
       }],
       layoutAgua:{
-        title: "Temperatura del agua"
+        title: "Temperatura del agua",
+        yaxis: {
+          title: 'Temp. (C)',
+        },
+        xaxis: {
+          title: 'Tiempo',
+        }
       },
       layoutAire:{
-        title: "Temperatura del aire"
+        title: "Temperatura del aire",
+        yaxis: {
+          title: 'Temp. (C)',
+        },
+        xaxis: {
+          title: 'Tiempo',
+        }
       },
       layoutUv:{
-        title: "Indice UV"
+        title: "Indice UV",
+        yaxis: {
+          title: 'Indice UV',
+        },
+        xaxis: {
+          title: 'Tiempo',
+        }
       },
       layoutPresion:{
-        title: "Presión"
+        title: "Presión",
+        yaxis: {
+          title: 'Presión (kPa)',
+        },
+        xaxis: {
+          title: 'Tiempo',
+        }
       },
       layoutCombinado:{
-        title: "Superposición de variables"
+        title: "Superposición de variables",
+        xaxis: {
+          title: 'Tiempo',
+        }
       }
     }
   },
