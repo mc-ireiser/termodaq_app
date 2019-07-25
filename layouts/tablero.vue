@@ -23,7 +23,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/tablero/estudios/listado">
                 <i class="fas fa-list-alt"></i> Listado
               </a>
             </li>
