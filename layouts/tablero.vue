@@ -35,7 +35,7 @@
             </li>
             <li class="nav-title">Usuario</li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/tablero/perfil">
                 <i class="fas fa-user"></i> Perfil
               </a>
             </li>
@@ -46,7 +46,7 @@
               <ul class="nav-dropdown-items">
                 <li class="nav-title">Contraseña</li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="/auth/cambiar">
                     <i class="fas fa-exchange-alt"></i> Cambiar
                   </a>
                 </li>
@@ -104,7 +104,7 @@
       </div>
       <main class="main">
         <!-- Main content here -->
-        <div class="container-fluid my-4">
+        <div class="container-fluid px-0 mt-0">
           <nuxt/>
         </div>
       </main>
@@ -147,7 +147,7 @@ export default {
       })
 
       .then(function (response) {
-        localStorage.setItem("id", null)
+        localStorage.setItem("token", null)
         localStorage.setItem("userId", null)
         self.$router.push('/auth/login')
       })
