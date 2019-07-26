@@ -134,7 +134,7 @@
                         :aria-valuemin="uvMin"
                         :aria-valuemax="uvMax"
                         :aria-valuenow="uvAvg"
-                        class="progress-bar bg-danger"
+                        class="progress-bar bg-warning"
                         style="width: 100%;"
                       >
                       </div>
