@@ -97,6 +97,31 @@ export default {
     }
   },
 
+  async mounted() {
+    let env = require("~/const/env.json");
+    let token = localStorage.getItem("token")
+    let userId = localStorage.getItem("userId")
+    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let apiToken = ""
+    let self = this
+
+    const actualToken = await this.$axios.$get(url)
+    
+    actualToken.forEach(element => {
+      if (element.id === token) {
+        apiToken = token
+        console.log('token-presente')
+      }
+    })
+
+    if (token != apiToken) {
+      localStorage.setItem("token", null)
+      localStorage.setItem("userId", null)
+    } else {
+      this.$router.push('/tablero/estudios/listado')
+    }
+  },
+
   methods: {
     onSubmit(params) {
       let userData = this.userData
