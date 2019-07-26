@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <div v-if="muestreo">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">
+        <li v-if="ficha" class="breadcrumb-item active" aria-current="page">
           Muestreo: {{ficha.titulo}} - {{ficha.lugar}} -
+          <a href="/tablero/estudios/listado">volver al listado</a>
+        </li>
+        <li v-else class="breadcrumb-item active" aria-current="page">
+          Muestreo: N/A - N/A -
           <a href="/tablero/estudios/listado">volver al listado</a>
         </li>
       </ol>
@@ -13,26 +17,138 @@
         <div class="row">
           <div class="col-sm-12">
 
-            <div class="card mx-4 pl-2">
-              <h5 class="my-2">Titulo: {{ficha.titulo}}</h5>
-              <h6>Lugar: {{ficha.lugar}}</h6>              
+            <div v-if="ficha">
+              <div class="card mx-4 pl-2">
+                <h5 class="my-2">Titulo: {{ficha.titulo}}</h5>
+                <h6>Lugar: {{ficha.lugar}}</h6>              
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <h6 class="my-2">descripcion</h6>
+                <p>{{ficha.descripcion}}</p>
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <h6 class="my-2">Investigadores</h6>
+                <p></p>
+              </div>
+            </div>
+
+            <div v-else>
+              <div class="card mx-4 pl-2">
+                <h5 class="my-2">Titulo: N/A</h5>
+                <h6>Lugar: N/A</h6>              
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <h6 class="my-2">descripcion</h6>
+                <p>N/A</p>
+              </div>
+
+              <div class="card mx-4 pl-2">
+                <h6 class="my-2">Investigadores</h6>
+                <p>N/A</p>
+              </div>
             </div>
 
             <div class="card mx-4 pl-2">
-              <h6 class="my-2">descripcion</h6>
-              <p>{{ficha.descripcion}}</p>
-            </div>
-
-            <div class="card mx-4 pl-2">
-              <h6 class="my-2">Investigadores</h6>
-              <p></p>
+              <div class="row">
+                <div class="col-sm">
+                  <div class="card-body">
+                    <div class="h1 text-muted text-right mb-4">
+                      <i class="icon-speedometer"></i>
+                    </div>
+                    <div class="h4 mb-0">{{aguaAvg}} ℃</div>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Agua</small><br><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aguaMin}} ℃</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MAX {{aguaMax}} ℃</small>
+                    <div class="progress-xs mt-3 mb-0 progress">
+                      <div
+                        role="progressbar"
+                        :aria-valuemin="aguaMin"
+                        :aria-valuemax="aguaMax"
+                        :aria-valuenow="aguaAvg"
+                        class="progress-bar bg-danger"
+                        style="width: 100%;"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card-body">
+                    <div class="h1 text-muted text-right mb-4">
+                      <i class="icon-speedometer"></i>
+                    </div>
+                    <div class="h4 mb-0">{{aireAvg}} ℃</div>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Ambiente</small><br><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aireMin}} ℃</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MAX {{aireMax}} ℃</small>
+                    <div class="progress-xs mt-3 mb-0 progress">
+                      <div
+                        role="progressbar"
+                        :aria-valuemin="aireMin"
+                        :aria-valuemax="aireMax"
+                        :aria-valuenow="aireAvg"
+                        class="progress-bar bg-primary"
+                        style="width: 100%;"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card-body">
+                    <div class="h1 text-muted text-right mb-4">
+                      <i class="icon-speedometer"></i>
+                    </div>
+                    <div class="h4 mb-0">{{presionAvg}} kPa</div>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Presión</small><br><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{presionMin}} kPa</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MAX {{presionMax}} kPa</small>
+                    <div class="progress-xs mt-3 mb-0 progress">
+                      <div
+                        role="progressbar"
+                        :aria-valuemin="presionMin"
+                        :aria-valuemax="presionMax"
+                        :aria-valuenow="presionAvg"
+                        class="progress-bar bg-success"
+                        style="width: 100%;"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card-body">
+                    <div class="h1 text-muted text-right mb-4">
+                      <i class="icon-speedometer"></i>
+                    </div>
+                    <div class="h4 mb-0">{{uvAvg}} UV</div>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Indice UV</small><br><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{uvMin}} UV</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">MAX {{uvMax}} UV</small>
+                    <div class="progress-xs mt-3 mb-0 progress">
+                      <div
+                        role="progressbar"
+                        :aria-valuemin="uvMin"
+                        :aria-valuemax="uvMax"
+                        :aria-valuenow="uvAvg"
+                        class="progress-bar bg-danger"
+                        style="width: 100%;"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <no-ssr>
-              <div v-if="muestreo[0]" class="card mx-4 pl-2 p-4" style="height: 50vh">
-                <l-map :zoom=15 :center="[muestreo[0].latitude || 0, muestreo[0].longitude || 0]">
+              <div v-if="muestreo.data" class="card mx-4 pl-2 p-4" style="height: 50vh">
+                <l-map :zoom=15 :center="[muestreo.data[0].latitude || 0, muestreo.data[0].longitude || 0]">
                   <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                  <l-marker v-for="row in muestreo" :lat-lng="[row.latitude, row.longitude]" :key="row.id"></l-marker>
+                  <l-marker v-for="row in muestreo.data" :lat-lng="[row.latitude, row.longitude]" :key="row.id"></l-marker>
                 </l-map>
               </div>
             </no-ssr>
@@ -84,7 +200,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="row in muestreo" :key="row.id">
+                  <tr v-for="row in muestreo.data" :key="row.id">
                     <td>{{row.date}}</td>
                     <td>{{row.time}}</td>
                     <td>{{row.latitude}}</td>
@@ -220,7 +336,67 @@ export default {
       data.push(this.uv[0])
       data.push(this.presion[0])
       return data
-    }
+    },
+
+    aguaMin: function() {
+      let x = this.agua[0].y
+      return Math.min(...x)
+    },
+
+    aguaMax: function() {
+      let x = this.agua[0].y
+      return Math.max(...x)
+    },
+
+    aguaAvg() {
+      let x = this.agua[0].y
+      return x.reduce((a,b) => a + b, 0) / x.length
+    },
+
+    aireMin: function() {
+      let x = this.aire[0].y
+      return Math.min(...x)
+    },
+
+    aireMax: function() {
+      let x = this.aire[0].y
+      return Math.max(...x)
+    },
+
+    aireAvg() {
+      let x = this.aire[0].y
+      return x.reduce((a,b) => a + b, 0) / x.length
+    },
+
+    presionMin: function() {
+      let x = this.presion[0].y
+      return Math.min(...x)
+    },
+
+    presionMax: function() {
+      let x = this.presion[0].y
+      return Math.max(...x)
+    },
+
+    presionAvg() {
+      let x = this.presion[0].y
+      return x.reduce((a,b) => a + b, 0) / x.length
+    },
+
+    uvMin: function() {
+      let x = this.uv[0].y
+      return Math.min(...x)
+    },
+
+    uvMax: function() {
+      let x = this.uv[0].y
+      return Math.max(...x)
+    },
+
+    uvAvg() {
+      let x = this.uv[0].y
+      return parseInt(x.reduce((a,b) => a + b, 0) / x.length)
+    },
   },
 
   asyncData(context) {
@@ -242,26 +418,12 @@ export default {
       this.$router.push('/auth/login')
     }
 
-    const actualToken = await this.$axios.$get(url)
-    
-    actualToken.forEach(element => {
-      if (element.id === token) {
-        apiToken = token
-        console.log('token-presente')
-      }
-    })
-
-    if (token != apiToken) {
-      localStorage.setItem("token", null)
-      localStorage.setItem("userId", null)
-      this.$router.push("/auth/login");
-    }
-
-    let urlMuestreo = `${env.api_host}/estudio/${idMuestreo}?access_token=${token}`
-    await this.$axios.$get(urlMuestreo)
-    
+    let urlEstudios = `${env.api_host}/estudio/${idMuestreo}?filter[include]=ficha&access_token=${token}`
+    await this.$axios.$get(urlEstudios)
+ 
     .then(function(response) {
-      self.muestreo = response.data
+      self.muestreo = response
+      self.ficha = response.ficha
       response.data.forEach(element => {
         self.agua[0].x.push(element.date + '-' + element.time)
         self.aire[0].x.push(element.date + '-' + element.time)
@@ -284,22 +446,20 @@ export default {
       }
     })
 
-    let urlFicha = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`
-    await this.$axios.$get(urlFicha)
+    const actualToken = await this.$axios.$get(url)
     
-    .then(function(response) {
-      self.ficha = response
-    })
-    
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-      } else {
-        console.log(e);
+    actualToken.forEach(element => {
+      if (element.id === token) {
+        apiToken = token
+        console.log('token-presente')
       }
     })
+
+    if (token != apiToken) {
+      localStorage.setItem("token", null)
+      localStorage.setItem("userId", null)
+      this.$router.push("/auth/login");
+    }
   },
 
   methods: {
