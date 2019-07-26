@@ -157,12 +157,12 @@ export default {
           let error = e.response.data.error
           let detalles = error.details
           console.log(error.statusCode)
-          console.log(error.code)
-          console.log(error.name)
-          console.log(error.message)
-          console.log(error.details)
 
-          self.$toast.error('Error, no fue posible cerrar la sesión', {
+          localStorage.setItem("token", null)
+          localStorage.setItem("userId", null)
+          self.$router.push('/auth/login')
+
+          self.$toast.error('Error, en validación', {
             duration: 10000,
             iconPack: 'fontawesome',
             icon : 'times'
