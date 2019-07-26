@@ -44,7 +44,7 @@
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <button type="submit" class="btn px-4 mb-2 btn-primary w-100">Entrar</button>
+                        <button type="submit" class="btn px-4 mb-2 btn-primary w-100" :disabled="loginBtn">Entrar</button>
                       </div>
                     </div>
                     <div class="row">
@@ -83,6 +83,7 @@ export default {
   
   data() {
     return {
+      loginBtn: false,
       userData: {
         username: "",
         email: "",
@@ -103,6 +104,8 @@ export default {
 
   methods: {
     onSubmit(params) {
+      this.loginBtn = true
+
       let userData = this.userData
       let env = require('~/const/env.json');
       let url = env.api_host + '/usuario/login'
@@ -124,6 +127,8 @@ export default {
       })
 
       .then(function (response) {
+        this.loginBtn = false
+
         localStorage.setItem("token", response.data.id)
         localStorage.setItem("userId", response.data.userId)
         
@@ -137,6 +142,8 @@ export default {
       })
 
       .catch(function (e) {
+        this.loginBtn = true
+        
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details

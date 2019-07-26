@@ -79,7 +79,7 @@
                       required
                     />
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block">Crear una cuenta</button>
+                  <button type="submit" class="btn btn-primary btn-block" :disabled="registroBtn">Crear una cuenta</button>
                 </form>
               </div>
               <div class="card-footer p-4">
@@ -105,6 +105,7 @@ export default {
 
   data() {
     return {
+      registroBtn: false,
       userData: {
         username: "",
         email: "",
@@ -126,6 +127,8 @@ export default {
 
   methods: {
     onSubmit(params) {
+      this.registroBtn = true
+
       if (this.userData.password.trim() !== this.userData.password_confirm.trim()) {
         this.$toast.error('La contraseña no coincide, por favor verifique', {
           duration: 3500,
@@ -157,6 +160,8 @@ export default {
       })
 
       .then(function (response) {
+        this.registroBtn = false
+
         self.$toast.success('La cuenta fue creada de manera exitosa.', {
           duration: 3500,
           iconPack: 'fontawesome',
@@ -167,6 +172,8 @@ export default {
       })
 
       .catch(function (e) {
+        this.registroBtn = false
+        
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details
