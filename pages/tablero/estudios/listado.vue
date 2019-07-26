@@ -27,6 +27,20 @@
                 </tbody>
               </table>
             </div>
+            <div class="card mx-4">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Estudios sin ficha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in estudios_sficha" :key="item" @click="getMuestreoSf(item)">
+                    <td>{{item}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -41,6 +55,7 @@ export default {
   data() {
     return {
       estudios: [],
+      estudios_sficha: [],
       fichas: []
     }
   },
@@ -63,6 +78,30 @@ export default {
       this.$router.push('/auth/login')
     }
 
+    let urlEstudios = `${env.api_host}/estudio?filter[where][userId]=${userId}&filter[fields][userId]=true&filter[fields][id]=true&filter[include]=ficha&access_token=${token}`
+    await this.$axios.$get(urlEstudios)
+    
+    .then(function(response) {
+      response.forEach(element => {
+        if (element.ficha) {
+          self.fichas.push(element.ficha)
+          self.estudios.push(element.id)
+        } else {
+          self.estudios_sficha.push(element.id)
+        }
+      })
+    })
+
+    .catch(function(e) {
+      if (e.response) {
+        let error = e.response.data.error;
+        let detalles = error.details;
+        console.log(error.statusCode);
+      } else {
+        console.log(e);
+      }
+    })
+
     const actualToken = await this.$axios.$get(url)
     
     actualToken.forEach(element => {
@@ -77,52 +116,15 @@ export default {
       localStorage.setItem("userId", null)
       this.$router.push("/auth/login");
     }
-
-    let urlEstudios = `${env.api_host}/estudio?access_token=${token}`
-    await this.$axios.$get(urlEstudios)
-    
-    .then(function(response) {
-      response.forEach(element => {
-        self.estudios.push(element.id)
-      })
-    })
-
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-      } else {
-        console.log(e);
-      }
-    })
-
-    this.getEstudios(env.api_host, token)
   },
 
   methods: {
-    getEstudios(host, token) {
-      let self = this
-      this.estudios.forEach(id => {
-        let urlFichas = `${host}/estudio/${id}/ficha?access_token=${token}`
-        this.$axios.$get(urlFichas)
-        .then(function(response) {
-          self.fichas.push(response)
-        })
-        .catch(function(e) {
-          if (e.response) {
-            let error = e.response.data.error;
-            let detalles = error.details;
-            console.log(error.statusCode)
-          } else {
-            console.log(e);
-          }
-        })
-      })
-    },
-
     getMuestreo(muestreo) {
       this.$router.push('/tablero/estudios/' + muestreo.userId)
+    },
+
+    getMuestreoSf(muestreo) {
+      this.$router.push('/tablero/estudios/' + muestreo)
     }
 
   }
