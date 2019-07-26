@@ -1,13 +1,11 @@
 <template>
-  <div class="container">
-    <p>root</p>
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  components: {
-    Logo
+  mounted() {
+    this.$router.push('/auth/login')
   }
 }
 </script>
