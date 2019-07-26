@@ -121,20 +121,6 @@ export default {
       this.$router.push('/auth/login')
     }
 
-    const actualToken = await this.$axios.$get(url)
-    actualToken.forEach(element => {
-      if (element.id === token) {
-        apiToken = token
-        console.log('token-presente')
-      }
-    })
-
-    if (token != apiToken) {
-      localStorage.setItem("token", null)
-      localStorage.setItem("userId", null)
-      this.$router.push("/auth/login");
-    }
-
     let urlPerfil = `${env.api_host}/usuario/${userId}/perfil?access_token=${token}`
     await this.$axios.$get(urlPerfil)
     
@@ -172,6 +158,20 @@ export default {
         console.log(e);
       }
     })
+
+    const actualToken = await this.$axios.$get(url)
+    actualToken.forEach(element => {
+      if (element.id === token) {
+        apiToken = token
+        console.log('token-presente')
+      }
+    })
+
+    if (token != apiToken) {
+      localStorage.setItem("token", null)
+      localStorage.setItem("userId", null)
+      this.$router.push("/auth/login");
+    }
   },
 
   methods: {
