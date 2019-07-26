@@ -160,7 +160,7 @@ export default {
       })
 
       .then(function (response) {
-        this.registroBtn = false
+        self.registroBtn = false
 
         self.$toast.success('La cuenta fue creada de manera exitosa.', {
           duration: 3500,
@@ -172,8 +172,8 @@ export default {
       })
 
       .catch(function (e) {
-        this.registroBtn = false
-        
+        self.registroBtn = false
+
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details

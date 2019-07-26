@@ -127,7 +127,7 @@ export default {
       })
 
       .then(function (response) {
-        this.loginBtn = false
+        self.loginBtn = false
 
         localStorage.setItem("token", response.data.id)
         localStorage.setItem("userId", response.data.userId)
@@ -142,7 +142,7 @@ export default {
       })
 
       .catch(function (e) {
-        this.loginBtn = false
+        self.loginBtn = false
 
         if (e.response) {
           let error = e.response.data.error
