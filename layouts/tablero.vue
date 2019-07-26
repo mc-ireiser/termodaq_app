@@ -18,7 +18,7 @@
           <ul class="nav">
             <li class="nav-title">Estudios</li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/tablero/estudios/nuevo">
                 <i class="fas fa-file-alt"></i> Nuevo
               </a>
             </li>
