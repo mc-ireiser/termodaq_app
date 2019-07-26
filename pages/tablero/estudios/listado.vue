@@ -102,20 +102,36 @@ export default {
       }
     })
 
-    const actualToken = await this.$axios.$get(url)
-    
-    actualToken.forEach(element => {
-      if (element.id === token) {
-        apiToken = token
-        console.log('token-presente')
+    await this.$axios.$get(url)
+
+    .then(function(response) {
+      response.forEach(element => {
+        if (element.id === token) {
+          apiToken = token
+          console.log('token-presente')
+        }
+      })
+
+      if (token != apiToken) {
+        localStorage.setItem("token", null)
+        localStorage.setItem("userId", null)
+        this.$router.push("/auth/login");
       }
     })
 
-    if (token != apiToken) {
-      localStorage.setItem("token", null)
-      localStorage.setItem("userId", null)
-      this.$router.push("/auth/login");
-    }
+    .catch(function(e) {
+      if (e.response) {
+        let error = e.response.data.error;
+        let detalles = error.details;
+        console.log(error.statusCode);
+        localStorage.setItem("token", null)
+        localStorage.setItem("userId", null)
+        this.$router.push("/auth/login")
+      } else {
+        console.log(e);
+      }
+    })
+
   },
 
   methods: {

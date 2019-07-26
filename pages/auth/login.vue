@@ -142,8 +142,8 @@ export default {
       })
 
       .catch(function (e) {
-        this.loginBtn = true
-        
+        this.loginBtn = false
+
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details
