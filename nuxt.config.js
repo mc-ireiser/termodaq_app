@@ -47,6 +47,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/toast',
+    'nuxt-leaflet'
   ],
   /*
   ** Axios module configuration

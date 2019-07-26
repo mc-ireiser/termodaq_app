@@ -28,33 +28,45 @@
               <p></p>
             </div>
 
-            <NoSsr placeholder="Cargando...">
-
-              <div class="card mx-4 pl-2">
-                <Plotly :data="mapa" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
+            <no-ssr>
+              <div v-if="muestreo[0]" class="card mx-4 pl-2 p-4" style="height: 50vh">
+                <l-map :zoom=15 :center="[muestreo[0].latitude || 0, muestreo[0].longitude || 0]">
+                  <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                  <l-marker v-for="row in muestreo" :lat-lng="[row.latitude, row.longitude]" :key="row.id"></l-marker>
+                </l-map>
               </div>
+            </no-ssr>
 
+            <no-ssr>
               <div class="card mx-4 pl-2">
                 <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="false"></Plotly>
               </div>
+            </no-ssr>
+              
 
+            <no-ssr>
               <div class="card mx-4 pl-2">
                 <Plotly :data="aire" :layout="layoutAire" :display-mode-bar="false"></Plotly>
               </div>
+            </no-ssr>
 
+            <no-ssr>
               <div class="card mx-4 pl-2">
                 <Plotly :data="uv" :layout="layoutUv" :display-mode-bar="false"></Plotly>
               </div>
+            </no-ssr>
 
+            <no-ssr>
               <div class="card mx-4 pl-2">
                 <Plotly :data="presion" :layout="layoutPresion" :display-mode-bar="false"></Plotly>
               </div>
+            </no-ssr>
 
-              <div class="card mx-4 pl-2">
+            <no-ssr>
+              <div id="myDiv" class="card mx-4 pl-2">
                 <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
               </div>
-
-            </NoSsr>
+            </no-ssr>
 
             <div class="card mx-4">
               <table class="table table-hover">
@@ -72,7 +84,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="row in muestreo" :key="row.time" @click="getMuestreo(item)">
+                  <tr v-for="row in muestreo" :key="row.id">
                     <td>{{row.date}}</td>
                     <td>{{row.time}}</td>
                     <td>{{row.latitude}}</td>
@@ -183,6 +195,15 @@ export default {
         xaxis: {
           title: 'Tiempo',
         }
+      },
+      layoutMapa: {
+        autosize: true,
+        hovermode:'closest',
+        mapbox: {
+          bearing:0,
+          pitch:0,
+          zoom:5
+        }
       }
     }
   },
@@ -276,13 +297,9 @@ export default {
         console.log(e);
       }
     })
-
   },
 
   methods: {
-    getEstudios(host, token) {
-      
-    }
 
   }
 };
