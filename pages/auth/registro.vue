@@ -149,7 +149,6 @@ export default {
           'Content-Type': 'application/json',
         },
         withCredentials: false,
-        //credentials: 'same-origin',
         data: {
           username: userData.username,
           email: userData.email,
@@ -163,6 +162,7 @@ export default {
           iconPack: 'fontawesome',
           icon : 'check'
         })
+        
         self.$router.push('/auth/login')
       })
 
@@ -170,11 +170,6 @@ export default {
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details
-          console.log(error.statusCode)
-          console.log(error.code)
-          console.log(error.name)
-          console.log(error.message)
-          console.log(error.details)
 
           if (error.details.codes.username[0] == 'uniqueness') {
             self.error.username = true
@@ -189,6 +184,7 @@ export default {
             iconPack: 'fontawesome',
             icon : 'times'
           })
+
         } else {
           console.log(e)
         }

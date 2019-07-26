@@ -94,6 +94,7 @@ export default {
           iconPack: 'fontawesome',
           icon : 'check'
         })
+        
         self.$router.push('/auth/login')
       })
 
@@ -101,17 +102,13 @@ export default {
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details
-          console.log(error.statusCode)
-          console.log(error.code)
-          console.log(error.name)
-          console.log(error.message)
-          console.log(error.details)
 
           self.$toast.error('Error, no es posible realizar la operación en este momento', {
             duration: 4000,
             iconPack: 'fontawesome',
             icon : 'times'
           })
+
         } else {
           console.log(e)
         }

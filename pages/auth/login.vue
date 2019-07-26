@@ -113,7 +113,6 @@ export default {
           'Content-Type': 'application/json',
         },
         withCredentials: false,
-        //credentials: 'same-origin',
         data: {
           username: userData.username,
           password: userData.password
@@ -123,23 +122,20 @@ export default {
       .then(function (response) {
         localStorage.setItem("token", response.data.id)
         localStorage.setItem("userId", response.data.userId)
+        
         self.$toast.success('Bienvenido', {
           duration: 3500,
           iconPack: 'fontawesome',
           icon : 'check'
         })
-        self.$router.push('/tablero/inicio')
+
+        self.$router.push('/tablero/estudios/listado')
       })
 
       .catch(function (e) {
         if (e.response) {
           let error = e.response.data.error
           let detalles = error.details
-          console.log(error.statusCode)
-          console.log(error.code)
-          console.log(error.name)
-          console.log(error.message)
-          console.log(error.details)
 
           if (error.code == 'LOGIN_FAILED_EMAIL_NOT_VERIFIED') {
             self.$toast.error('Cuenta no verificada, un link de confirmacion fue enviado a su email', {

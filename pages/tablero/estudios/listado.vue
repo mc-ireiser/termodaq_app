@@ -9,7 +9,6 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-
             <div class="card mx-4">
               <table class="table table-hover">
                 <thead>
@@ -28,7 +27,6 @@
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
       </div>
@@ -82,11 +80,13 @@ export default {
 
     let urlEstudios = `${env.api_host}/estudio?access_token=${token}`
     await this.$axios.$get(urlEstudios)
+    
     .then(function(response) {
       response.forEach(element => {
         self.estudios.push(element.id)
       })
     })
+
     .catch(function(e) {
       if (e.response) {
         let error = e.response.data.error;

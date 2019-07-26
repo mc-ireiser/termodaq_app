@@ -259,9 +259,9 @@ export default {
 
     let urlMuestreo = `${env.api_host}/estudio/${idMuestreo}?access_token=${token}`
     await this.$axios.$get(urlMuestreo)
+    
     .then(function(response) {
       self.muestreo = response.data
-
       response.data.forEach(element => {
         self.agua[0].x.push(element.date + '-' + element.time)
         self.aire[0].x.push(element.date + '-' + element.time)
@@ -273,6 +273,7 @@ export default {
         self.presion[0].y.push(element.pressure)
       })
     })
+
     .catch(function(e) {
       if (e.response) {
         let error = e.response.data.error;
@@ -285,9 +286,11 @@ export default {
 
     let urlFicha = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`
     await this.$axios.$get(urlFicha)
+    
     .then(function(response) {
       self.ficha = response
     })
+    
     .catch(function(e) {
       if (e.response) {
         let error = e.response.data.error;

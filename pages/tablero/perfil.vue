@@ -66,7 +66,6 @@
           </div>
 
           <div class="col-sm-12 col-md-4">
-
             <div class="card-body bg-dark p-0 clearfix">
               <i class="fas fa-vial bg-primary p-4 px-5 font-4xl mr-3 float-left"></i>
               <div class="h2 text-primary mb-0 pt-3">
@@ -74,7 +73,6 @@
               </div>
               <div class="text-light text-uppercase font-weight-bold font-xs">Muestreos realizados</div>
             </div>
-
           </div>
 
         </div>
@@ -139,19 +137,17 @@ export default {
 
     let urlPerfil = `${env.api_host}/usuario/${userId}/perfil?access_token=${token}`
     await this.$axios.$get(urlPerfil)
+    
     .then(function(response) {
       self.perfil = true
       self.userData = response
     })
+
     .catch(function(e) {
       if (e.response) {
         let error = e.response.data.error;
         let detalles = error.details;
         console.log(error.statusCode);
-        console.log(error.code);
-        console.log(error.name);
-        console.log(error.message);
-        console.log(error.details);
 
         if (error.code == 'MODEL_NOT_FOUND') {
           self.perfil = false
@@ -163,18 +159,15 @@ export default {
 
     let urlcount = `${env.api_host}/usuario/${userId}/estudio/count?access_token=${token}`
     await this.$axios.$get(urlcount)
+    
     .then(function(response) {
       self.muestreos_count = response.count
     })
+    
     .catch(function(e) {
       if (e.response) {
         let error = e.response.data.error;
         let detalles = error.details;
-        console.log(error.statusCode);
-        console.log(error.code);
-        console.log(error.name);
-        console.log(error.message);
-        console.log(error.details);
       } else {
         console.log(e);
       }
@@ -230,17 +223,13 @@ export default {
         if (e.response) {
           let error = e.response.data.error;
           let detalles = error.details;
-          console.log(error.statusCode);
-          console.log(error.code);
-          console.log(error.name);
-          console.log(error.message);
-          console.log(error.details);
 
           self.$toast.error("Error, verifique los datos", {
             duration: 3500,
             iconPack: "fontawesome",
             icon: "times"
-          });
+          })
+
         } else {
           console.log(e);
         }

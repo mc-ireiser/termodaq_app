@@ -96,34 +96,38 @@ export default {
     };
   },
 
-  async mounted() {
-    let env = require("~/const/env.json");
-    let token = localStorage.getItem("token")
-    let userId = localStorage.getItem("userId")
-    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
-    let apiToken = ""
-
-    if (!token) {
-      this.$router.push('/auth/login')
-    }
-
-    const actualToken = await this.$axios.$get(url)
-    
-    actualToken.forEach(element => {
-      if (element.id === token) {
-        apiToken = token
-        console.log('token-presente')
-      }
-    });
-
-    if (token != apiToken) {
-      localStorage.setItem("token", null)
-      localStorage.setItem("userId", null)
-      this.$router.push("/auth/login");
-    }
+  mounted() {
+    this.checkToken()
   },
 
   methods: {
+    async checkToken() {
+      let env = require("~/const/env.json");
+      let token = localStorage.getItem("token")
+      let userId = localStorage.getItem("userId")
+      let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+      let apiToken = ""
+
+      if (!token) {
+        this.$router.push('/auth/login')
+      }
+
+      const actualToken = await this.$axios.$get(url)
+      
+      actualToken.forEach(element => {
+        if (element.id === token) {
+          apiToken = token
+          console.log('token-pass')
+        }
+      });
+
+      if (token != apiToken) {
+        localStorage.setItem("token", null)
+        localStorage.setItem("userId", null)
+        this.$router.push("/auth/login");
+      }
+    },
+
     onSubmit(params) {
       let userData = this.userData;
       let env = require("~/const/env.json");
@@ -155,6 +159,7 @@ export default {
           iconPack: "fontawesome",
           icon: "check"
         });
+
         localStorage.setItem("token", null)
         localStorage.setItem("userId", null)
         self.$router.push("/auth/login");
@@ -164,26 +169,18 @@ export default {
         if (e.response) {
           let error = e.response.data.error;
           let detalles = error.details;
-          console.log(error.statusCode);
-          console.log(error.code);
-          console.log(error.name);
-          console.log(error.message);
-          console.log(error.details);
-
+          
           self.$toast.error("Error, verifique los datos", {
             duration: 3500,
             iconPack: "fontawesome",
             icon: "times"
           });
+          
         } else {
           console.log(e);
         }
       });
     }
-
   }
 };
 </script>
-
-<style scoped>
-</style>
