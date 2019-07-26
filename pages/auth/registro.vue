@@ -125,6 +125,37 @@ export default {
     }
   },
 
+  async mounted() {
+    let env = require("~/const/env.json");
+    let token = localStorage.getItem("token")
+    let userId = localStorage.getItem("userId")
+    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let apiToken = ""
+    let self = this
+
+    await this.$axios.$get(url)
+
+    .then(function(response) {
+      response.forEach(element => {
+        if (element.id === token) {
+          apiToken = token
+          console.log('token-presente')
+          self.$router.push("/tablero/estudios/listado")
+        }
+      })
+    })
+
+    .catch(function(e) {
+      if (e.response) {
+        let error = e.response.data.error;
+        let detalles = error.details;
+        console.log(error.statusCode);
+      } else {
+        console.log(e);
+      }
+    })
+  },
+
   methods: {
     onSubmit(params) {
       this.registroBtn = true
