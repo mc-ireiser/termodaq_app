@@ -58,7 +58,7 @@
                     <div class="h1 text-muted text-right mb-4">
                       <i class="icon-speedometer"></i>
                     </div>
-                    <div class="h4 mb-0">{{aguaAvg}} ℃</div>
+                    <div class="h4 mb-0">{{aguaAvg.toFixed(4)}} ℃</div>
                     <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Agua</small><br><br>
                     <small class="text-muted text-uppercase font-weight-bold">MIN {{aguaMin}} ℃</small><br>
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{aguaMax}} ℃</small>
@@ -80,7 +80,7 @@
                     <div class="h1 text-muted text-right mb-4">
                       <i class="icon-speedometer"></i>
                     </div>
-                    <div class="h4 mb-0">{{aireAvg}} ℃</div>
+                    <div class="h4 mb-0">{{aireAvg.toFixed(4)}} ℃</div>
                     <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Ambiente</small><br><br>
                     <small class="text-muted text-uppercase font-weight-bold">MIN {{aireMin}} ℃</small><br>
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{aireMax}} ℃</small>
@@ -102,7 +102,7 @@
                     <div class="h1 text-muted text-right mb-4">
                       <i class="icon-speedometer"></i>
                     </div>
-                    <div class="h4 mb-0">{{presionAvg}} kPa</div>
+                    <div class="h4 mb-0">{{presionAvg.toFixed(4)}} kPa</div>
                     <small class="text-muted text-uppercase font-weight-bold">Avg. Presión</small><br><br>
                     <small class="text-muted text-uppercase font-weight-bold">MIN {{presionMin}} kPa</small><br>
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{presionMax}} kPa</small>
@@ -155,32 +155,32 @@
 
             <no-ssr>
               <div class="card mx-4 pl-2">
-                <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="false"></Plotly>
+                <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
               
 
             <no-ssr>
               <div class="card mx-4 pl-2">
-                <Plotly :data="aire" :layout="layoutAire" :display-mode-bar="false"></Plotly>
+                <Plotly :data="aire" :layout="layoutAire" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
 
             <no-ssr>
               <div class="card mx-4 pl-2">
-                <Plotly :data="uv" :layout="layoutUv" :display-mode-bar="false"></Plotly>
+                <Plotly :data="uv" :layout="layoutUv" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
 
             <no-ssr>
               <div class="card mx-4 pl-2">
-                <Plotly :data="presion" :layout="layoutPresion" :display-mode-bar="false"></Plotly>
+                <Plotly :data="presion" :layout="layoutPresion" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
 
             <no-ssr>
               <div id="myDiv" class="card mx-4 pl-2">
-                <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="false"></Plotly>
+                <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
 
@@ -232,15 +232,6 @@ export default {
     return {
       muestreo: [],
       ficha: {},
-      mapa: {
-        type:'scattermapbox',
-        lat:['45.5017'],
-        lon:['-73.5673'],
-        mode:'markers',
-        marker: {
-          size:14
-        }
-      },
       agua:[{
         x: [],
         y: [],
@@ -277,6 +268,7 @@ export default {
         },
         xaxis: {
           title: 'Tiempo',
+          automargin: true
         }
       },
       layoutAire:{
@@ -286,6 +278,7 @@ export default {
         },
         xaxis: {
           title: 'Tiempo',
+          automargin: true
         }
       },
       layoutUv:{
@@ -295,6 +288,7 @@ export default {
         },
         xaxis: {
           title: 'Tiempo',
+          automargin: true
         }
       },
       layoutPresion:{
@@ -304,21 +298,14 @@ export default {
         },
         xaxis: {
           title: 'Tiempo',
+          automargin: true
         }
       },
       layoutCombinado:{
         title: "Superposición de variables",
         xaxis: {
           title: 'Tiempo',
-        }
-      },
-      layoutMapa: {
-        autosize: true,
-        hovermode:'closest',
-        mapbox: {
-          bearing:0,
-          pitch:0,
-          zoom:5
+          automargin: true
         }
       }
     }
