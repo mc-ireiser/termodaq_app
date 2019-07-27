@@ -98,13 +98,13 @@
             </div>
           </div>
           <div class="col-sm-12 col-md-4">
-            <div class="card-body bg-dark p-0 clearfix">
-              <i class="fas fa-vial bg-primary p-4 px-5 font-4xl mr-3 float-left"></i>
-              <nuxt-link class="nav-link" to="/tablero/estudios/listado">
-                <div class="h2 text-primary mb-0 pt-3">{{muestreos_count || 0}}</div>
-                <div class="text-light text-uppercase font-weight-bold font-xs">Muestreos realizados</div>
-              </nuxt-link>
-            </div>
+            <nuxt-link class="nav-link" to="/tablero/estudios/listado">
+              <div class="card-body bg-dark p-0 clearfix">
+                <i class="fas fa-vial bg-primary p-4 px-5 font-4xl mr-3 float-left"></i>
+                  <div class="h2 text-primary mb-0 pt-3">{{muestreos_count || 0}}</div>
+                  <div class="text-light text-uppercase font-weight-bold font-xs">Estudios realizados</div>
+              </div>
+            </nuxt-link>
           </div>
         </div>
       </div>
