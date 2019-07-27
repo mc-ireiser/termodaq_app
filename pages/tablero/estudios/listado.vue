@@ -12,34 +12,38 @@
             <div v-if="estudios.length == 0 & estudios_sficha.length == 0" class="mx-4 alert alert-primary" role="alert">
               Usted aun no posee estudios registrados.
             </div>
-            <div v-if="estudios.length > 0" class="card mx-4">
+            <div v-if="estudios.length > 0" class="card mx-4" style="overflow-x: scroll;">
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">Titulo</th>
                     <th scope="col">Lugar</th>
-                    <th scope="col">Descripción</th>
+                    <th scope="col" class="d-sm-down-none">Descripción</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in fichas" :key="item.id" @click="getMuestreo(item)">
+                  <tr v-for="item in fichas" :key="item.id">
                     <td>{{item.titulo}}</td>
                     <td>{{item.lugar}}</td>
-                    <td>{{item.descripcion}}</td>
+                    <td class="d-sm-down-none">{{item.descripcion}}</td>
+                    <td><button type="button" class="btn btn-primary float-right" @click="getMuestreo(item)">Ver</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div v-if="estudios_sficha.length > 0" class="card mx-4">
+            <div v-if="estudios_sficha.length > 0" class="card mx-4" style="overflow-x: scroll;">
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">Estudios sin ficha</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in estudios_sficha" :key="item" @click="getMuestreoSf(item)">
+                  <tr v-for="item in estudios_sficha" :key="item">
                     <td>{{item}}</td>
+                    <td><button type="button" class="btn btn-primary float-right" @click="getMuestreoSf(item)">Ver</button></td>
                   </tr>
                 </tbody>
               </table>
