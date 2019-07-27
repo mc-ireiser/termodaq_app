@@ -138,7 +138,6 @@ export default {
         if (token != apiToken) {
           localStorage.setItem("token", "");
           localStorage.setItem("userId", "");
-          self.$router.push("/auth/login");
         }
       })
 
@@ -159,7 +158,6 @@ export default {
 
           localStorage.setItem("token", "");
           localStorage.setItem("userId", "");
-          self.$router.push("/auth/login");
         } else {
           console.log(e);
         }
@@ -202,7 +200,7 @@ export default {
             icon: "check"
           });
 
-          self.$router.push("/tablero/estudios/listado");
+          self.$router.push("/tablero/usuario/perfil");
         })
 
         .catch(function(e) {
