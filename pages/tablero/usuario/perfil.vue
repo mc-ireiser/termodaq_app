@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="ready">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Perfil de usuario</li>
@@ -110,6 +110,11 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <div class="alert alert-primary" role="alert">
+      Cargando datos.
+    </div>
+  </div>
 </template>
 
 <script>
@@ -118,6 +123,7 @@ export default {
 
   data() {
     return {
+      ready: false,
       perfil: true,
       edit: false,
       muestreos_count: 0,
@@ -233,6 +239,9 @@ export default {
           console.log(e);
         }
       });
+
+    this.ready = true;
+
   },
 
   methods: {

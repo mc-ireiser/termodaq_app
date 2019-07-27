@@ -1,15 +1,18 @@
 <template>
-  <div>
+  <div v-if="ready">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Estudios realizados</li>
       </ol>
     </nav>
     <div class="app flex-row">
-      <div class="container">
+      <div class="container">   
         <div class="row">
           <div class="col-sm-12">
-            <div class="card mx-4">
+            <div v-if="estudios.length == 0 & estudios_sficha.length == 0" class="mx-4 alert alert-primary" role="alert">
+              Usted aun no posee estudios registrados.
+            </div>
+            <div v-if="estudios.length > 0" class="card mx-4">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -27,7 +30,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="card mx-4">
+            <div v-if="estudios_sficha.length > 0" class="card mx-4">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -46,6 +49,11 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <div class="alert alert-primary" role="alert">
+      Cargando datos.
+    </div>
+  </div>
 </template>
 
 <script>
@@ -54,6 +62,7 @@ export default {
 
   data() {
     return {
+      ready: false,
       estudios: [],
       estudios_sficha: [],
       fichas: []
@@ -143,6 +152,9 @@ export default {
           console.log(e);
         }
       });
+    
+    this.ready = true;
+
   },
 
   methods: {
