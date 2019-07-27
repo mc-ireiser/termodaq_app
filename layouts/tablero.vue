@@ -18,26 +18,26 @@
           <ul class="nav">
             <li class="nav-title">Estudios</li>
             <li class="nav-item">
-              <a class="nav-link" href="/tablero/estudios/nuevo">
+              <nuxt-link class="nav-link" to="/tablero/estudios/nuevo">
                 <i class="fas fa-file-alt"></i> Nuevo
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/tablero/estudios/listado">
+              <nuxt-link class="nav-link" to="/tablero/estudios/listado">
                 <i class="fas fa-list-alt"></i> Listado
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-title">Colaboraciones</li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <nuxt-link class="nav-link" to="/tablero/colaboraciones/listado">
                 <i class="fas fa-file-alt"></i> Listado
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-title">Usuario</li>
             <li class="nav-item">
-              <a class="nav-link" href="/tablero/perfil">
+              <nuxt-link class="nav-link" to="/tablero/usuario/perfil">
                 <i class="fas fa-user"></i> Perfil
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-item nav-dropdown">
               <a class="nav-link nav-dropdown-toggle" href="#">
@@ -46,21 +46,16 @@
               <ul class="nav-dropdown-items">
                 <li class="nav-title">Contraseña</li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/auth/cambiar">
+                  <nuxt-link class="nav-link" to="/auth/cambiar-contraseña">
                     <i class="fas fa-exchange-alt"></i> Cambiar
-                  </a>
+                  </nuxt-link>
                 </li>
-                <!--<li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-redo"></i> Restablecer
-                  </a>
-                </li>-->
               </ul>
             </li>
             <li class="nav-item" @click="logout">
-              <a class="nav-link" href="#">
+              <nuxt-link class="nav-link" to="#">
                 <i class="fas fa-sign-out-alt"></i> Salir
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-item nav-dropdown mt-auto">
               <a class="nav-link nav-dropdown-toggle nav-link-primary" href="#">
@@ -147,8 +142,8 @@ export default {
       })
 
       .then(function (response) {
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
+        localStorage.setItem("token", '')
+        localStorage.setItem("userId", '')
         self.$router.push('/auth/login')
       })
 
@@ -158,8 +153,8 @@ export default {
           let detalles = error.details
           console.log(error.statusCode)
 
-          localStorage.setItem("token", null)
-          localStorage.setItem("userId", null)
+          localStorage.setItem("token", '')
+          localStorage.setItem("userId", '')
           self.$router.push('/auth/login')
 
           self.$toast.error('Error, en validación', {
