@@ -74,7 +74,7 @@
 
 <script>
 export default {
-  layout: 'tablero',
+  layout: "tablero",
 
   data() {
     return {
@@ -97,33 +97,33 @@ export default {
   },
 
   mounted() {
-    this.checkToken()
+    this.checkToken();
   },
 
   methods: {
     async checkToken() {
       let env = require("~/const/env.json");
-      let token = localStorage.getItem("token")
-      let userId = localStorage.getItem("userId")
+      let token = localStorage.getItem("token");
+      let userId = localStorage.getItem("userId");
       let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
-      let apiToken = ""
+      let apiToken = "";
 
       if (!token) {
-        this.$router.push('/auth/login')
+        this.$router.push("/auth/login");
       }
 
-      const actualToken = await this.$axios.$get(url)
-      
+      const actualToken = await this.$axios.$get(url);
+
       actualToken.forEach(element => {
         if (element.id === token) {
-          apiToken = token
-          console.log('token-pass')
+          apiToken = token;
+          console.log("token-pass");
         }
       });
 
       if (token != apiToken) {
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
+        localStorage.setItem("token", "");
+        localStorage.setItem("userId", "");
         this.$router.push("/auth/login");
       }
     },
@@ -131,7 +131,7 @@ export default {
     onSubmit(params) {
       let userData = this.userData;
       let env = require("~/const/env.json");
-      let token = localStorage.getItem("token")
+      let token = localStorage.getItem("token");
       let url = env.api_host + "/usuario/change-password";
       let self = this;
 
@@ -144,7 +144,7 @@ export default {
           "Content-Type": "application/json"
         },
         params: {
-          "access_token": token
+          access_token: token
         },
         withCredentials: false,
         data: {
@@ -153,33 +153,32 @@ export default {
         }
       })
 
-      .then(function(response) {
-        self.$toast.success("La contraseña fue cambiada de manera exitosa.", {
-          duration: 5000,
-          iconPack: "fontawesome",
-          icon: "check"
-        });
-
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
-        self.$router.push("/auth/login");
-      })
-
-      .catch(function(e) {
-        if (e.response) {
-          let error = e.response.data.error;
-          let detalles = error.details;
-          
-          self.$toast.error("Error, verifique los datos", {
-            duration: 3500,
+        .then(function(response) {
+          self.$toast.success("La contraseña fue cambiada de manera exitosa.", {
+            duration: 5000,
             iconPack: "fontawesome",
-            icon: "times"
+            icon: "check"
           });
-          
-        } else {
-          console.log(e);
-        }
-      });
+
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        })
+
+        .catch(function(e) {
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
+
+            self.$toast.error("Error, verifique los datos", {
+              duration: 3500,
+              iconPack: "fontawesome",
+              icon: "times"
+            });
+          } else {
+            console.log(e);
+          }
+        });
     }
   }
 };

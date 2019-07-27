@@ -46,9 +46,7 @@
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
       userData: {
@@ -57,71 +55,71 @@ export default {
       error: {
         email: false
       }
-    }
+    };
   },
 
   asyncData(context) {
     return {
       project: "SPC"
-    }
+    };
   },
 
   methods: {
     onSubmit(params) {
-      
-      let userData = this.userData
-      let env = require('~/const/env.json');
-      let url = env.api_host + '/usuario/reset'
-      let self = this
+      let userData = this.userData;
+      let env = require("~/const/env.json");
+      let url = env.api_host + "/usuario/reset";
+      let self = this;
 
       this.$axios({
-        method: 'post',
+        method: "post",
         url: url,
-        mode: 'no-cors',
+        mode: "no-cors",
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
         withCredentials: false,
         data: {
-          email: userData.email,
+          email: userData.email
         }
       })
 
-      .then(function (response) {
-        self.$toast.success('Consulte su bandeja de entrada, si el email esta registrado recibira un correo.', {
-          duration: 10000,
-          iconPack: 'fontawesome',
-          icon : 'check'
+        .then(function(response) {
+          self.$toast.success(
+            "Consulte su bandeja de entrada, si el email esta registrado recibira un correo.",
+            {
+              duration: 10000,
+              iconPack: "fontawesome",
+              icon: "check"
+            }
+          );
+
+          self.$router.push("/auth/login");
         })
-        
-        self.$router.push('/auth/login')
-      })
 
-      .catch(function (e) {
-        if (e.response) {
-          let error = e.response.data.error
-          let detalles = error.details
+        .catch(function(e) {
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
 
-          self.$toast.error('Error, no es posible realizar la operación en este momento', {
-            duration: 4000,
-            iconPack: 'fontawesome',
-            icon : 'times'
-          })
-
-        } else {
-          console.log(e)
-        }
-      }) 
-
+            self.$toast.error(
+              "Error, no es posible realizar la operación en este momento",
+              {
+                duration: 4000,
+                iconPack: "fontawesome",
+                icon: "times"
+              }
+            );
+          } else {
+            console.log(e);
+          }
+        });
     },
 
     login(params) {
-      this.$router.push('/auth/login')
+      this.$router.push("/auth/login");
     }
   }
 };
 </script>
-
-<style scoped>
-</style>
