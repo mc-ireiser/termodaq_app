@@ -44,15 +44,27 @@
                     </div>
                     <div class="row">
                       <div class="col-12">
-                        <button type="submit" class="btn px-4 mb-2 btn-primary w-100" :disabled="loginBtn">Entrar</button>
+                        <button
+                          type="submit"
+                          class="btn px-4 mb-2 btn-primary w-100"
+                          :disabled="loginBtn"
+                        >Entrar</button>
                       </div>
                     </div>
                     <div class="row">
                       <div class="text-center col-6 col-lg-12 col-xl-12">
-                        <button type="button" @click="restablecer" class="btn px-0 btn-link">¿Has olvidado tu contraseña?</button>
+                        <button
+                          type="button"
+                          @click="restablecer"
+                          class="btn px-0 btn-link"
+                        >¿Has olvidado tu contraseña?</button>
                       </div>
                       <div class="text-center d-lg-none d-xl-none">
-                        <button type="button" @click="registro" class="btn px-0 btn-link">¡Regístrate ahora!</button>
+                        <button
+                          type="button"
+                          @click="registro"
+                          class="btn px-0 btn-link"
+                        >¡Regístrate ahora!</button>
                       </div>
                     </div>
                   </form>
@@ -65,7 +77,11 @@
                     <p
                       class="mt-4"
                     >Para utilizar la plataforma usted necesita una cuenta de usuario, esto le permite respaldar y visualizar los muestreos que realice con su tarjeta termoDaQ.</p>
-                    <button type="button" @click="registro" class="btn active mt-3 btn-primary">¡Regístrate ahora!</button>
+                    <button
+                      type="button"
+                      @click="registro"
+                      class="btn active mt-3 btn-primary"
+                    >¡Regístrate ahora!</button>
                   </div>
                 </div>
               </div>
@@ -78,9 +94,7 @@
 </template>
 
 <script>
-
 export default {
-  
   data() {
     return {
       loginBtn: false,
@@ -89,35 +103,85 @@ export default {
         email: "",
         password: ""
       }
-    }
+    };
   },
 
   asyncData(context) {
     return {
       project: "SPC"
-    }
+    };
   },
 
   async mounted() {
-    
+    let env = require("~/const/env.json");
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
+    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let apiToken = "";
+    let self = this;
+
+    if (!token) {
+      return;
+    }
+
+    await this.$axios
+      .$get(urlToken)
+
+      .then(function(response) {
+        response.forEach(element => {
+          if (element.id === token) {
+            apiToken = token;
+            console.log("token-presente");
+          }
+        });
+
+        if (token != apiToken) {
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        }
+      })
+
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
+
+          if ((error.statusCode = 401)) {
+            console.log("Acceso no autorizado, inicie sesión nuevamente");
+          }
+
+          self.$toast.error("Acceso no autorizado, inicie sesión nuevamente", {
+            duration: 5000,
+            iconPack: "fontawesome",
+            icon: "check"
+          });
+
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        } else {
+          console.log(e);
+        }
+      });
   },
 
   methods: {
     onSubmit(params) {
-      this.loginBtn = true
+      this.loginBtn = true;
 
-      let userData = this.userData
-      let env = require('~/const/env.json');
-      let url = env.api_host + '/usuario/login'
-      let self = this
+      let userData = this.userData;
+      let env = require("~/const/env.json");
+      let url = env.api_host + "/usuario/login";
+      let self = this;
 
       this.$axios({
-        method: 'post',
+        method: "post",
         url: url,
-        mode: 'no-cors',
+        mode: "no-cors",
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
         withCredentials: false,
         data: {
@@ -126,60 +190,59 @@ export default {
         }
       })
 
-      .then(function (response) {
-        self.loginBtn = false
+        .then(function(response) {
+          self.loginBtn = false;
 
-        localStorage.setItem("token", response.data.id)
-        localStorage.setItem("userId", response.data.userId)
-        
-        self.$toast.success('Bienvenido', {
-          duration: 3500,
-          iconPack: 'fontawesome',
-          icon : 'check'
+          localStorage.setItem("token", response.data.id);
+          localStorage.setItem("userId", response.data.userId);
+
+          self.$toast.success("Bienvenido", {
+            duration: 3500,
+            iconPack: "fontawesome",
+            icon: "check"
+          });
+
+          self.$router.push("/tablero/estudios/listado");
         })
 
-        self.$router.push('/tablero/estudios/listado')
-      })
+        .catch(function(e) {
+          self.loginBtn = false;
 
-      .catch(function (e) {
-        self.loginBtn = false
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
 
-        if (e.response) {
-          let error = e.response.data.error
-          let detalles = error.details
+            if (error.code == "LOGIN_FAILED_EMAIL_NOT_VERIFIED") {
+              self.$toast.error(
+                "Cuenta no verificada, un link de confirmacion fue enviado a su email",
+                {
+                  duration: 10000,
+                  iconPack: "fontawesome",
+                  icon: "times"
+                }
+              );
+            }
 
-          if (error.code == 'LOGIN_FAILED_EMAIL_NOT_VERIFIED') {
-            self.$toast.error('Cuenta no verificada, un link de confirmacion fue enviado a su email', {
-              duration: 10000,
-              iconPack: 'fontawesome',
-              icon : 'times'
-            })
+            if (error.code == "LOGIN_FAILED") {
+              self.$toast.error("Login invalido, verifique sus datos", {
+                duration: 3500,
+                iconPack: "fontawesome",
+                icon: "times"
+              });
+            }
+          } else {
+            console.log(e);
           }
-
-          if (error.code == 'LOGIN_FAILED') {
-            self.$toast.error('Login invalido, verifique sus datos', {
-              duration: 3500,
-              iconPack: 'fontawesome',
-              icon : 'times'
-            })
-          }
-
-        } else {
-          console.log(e)
-        }
-      })      
+        });
     },
 
     registro(params) {
-      this.$router.push('/auth/registro')
+      this.$router.push("/auth/registro");
     },
 
     restablecer(params) {
-      this.$router.push('/auth/restablecer')
+      this.$router.push("/auth/restablecer-contraseña");
     }
   }
 };
 </script>
-
-<style scoped>
-</style>

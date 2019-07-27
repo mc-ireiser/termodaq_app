@@ -50,14 +50,14 @@
 
 <script>
 export default {
-  layout: 'tablero',
+  layout: "tablero",
 
   data() {
     return {
       estudios: [],
       estudios_sficha: [],
       fichas: []
-    }
+    };
   },
 
   asyncData(context) {
@@ -68,84 +68,91 @@ export default {
 
   async mounted() {
     let env = require("~/const/env.json");
-    let token = localStorage.getItem("token")
-    let userId = localStorage.getItem("userId")
-    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
-    let apiToken = ""
-    let self = this
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
+    let urlToken = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let apiToken = "";
+    let self = this;
 
     if (!token) {
-      this.$router.push('/auth/login')
+      this.$router.push("/auth/login");
     }
 
-    let urlEstudios = `${env.api_host}/estudio?filter[where][userId]=${userId}&filter[fields][userId]=true&filter[fields][id]=true&filter[include]=ficha&access_token=${token}`
-    await this.$axios.$get(urlEstudios)
-    
-    .then(function(response) {
-      response.forEach(element => {
-        if (element.ficha) {
-          self.fichas.push(element.ficha)
-          self.estudios.push(element.id)
+    let urlEstudios = `${env.api_host}/estudio?filter[where][userId]=${userId}&filter[fields][userId]=true&filter[fields][id]=true&filter[include]=ficha&access_token=${token}`;
+    await this.$axios
+      .$get(urlEstudios)
+
+      .then(function(response) {
+        response.forEach(element => {
+          if (element.ficha) {
+            self.fichas.push(element.ficha);
+            self.estudios.push(element.id);
+          } else {
+            self.estudios_sficha.push(element.id);
+          }
+        });
+      })
+
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
+          console.log(error.statusCode);
         } else {
-          self.estudios_sficha.push(element.id)
+          console.log(e);
         }
-      })
-    })
+      });
 
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-      } else {
-        console.log(e);
-      }
-    })
+    await this.$axios
+      .$get(urlToken)
 
-    await this.$axios.$get(url)
+      .then(function(response) {
+        response.forEach(element => {
+          if (element.id === token) {
+            apiToken = token;
+            console.log("token-presente");
+          }
+        });
 
-    .then(function(response) {
-      response.forEach(element => {
-        if (element.id === token) {
-          apiToken = token
-          console.log('token-presente')
+        if (token != apiToken) {
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
         }
       })
 
-      if (token != apiToken) {
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
-        this.$router.push("/auth/login");
-      }
-    })
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
 
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
-        this.$router.push("/auth/login")
-      } else {
-        console.log(e);
-      }
-    })
+          if ((error.statusCode = 401)) {
+            console.log("Acceso no autorizado, inicie sesión nuevamente");
+          }
 
+          self.$toast.error("Acceso no autorizado, inicie sesión nuevamente", {
+            duration: 5000,
+            iconPack: "fontawesome",
+            icon: "check"
+          });
+
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        } else {
+          console.log(e);
+        }
+      });
   },
 
   methods: {
     getMuestreo(muestreo) {
-      this.$router.push('/tablero/estudios/' + muestreo.userId)
+      this.$router.push("/tablero/estudios/" + muestreo.userId);
     },
 
     getMuestreoSf(muestreo) {
-      this.$router.push('/tablero/estudios/' + muestreo)
+      this.$router.push("/tablero/estudios/" + muestreo);
     }
-
   }
 };
 </script>
-
-<style scoped>
-</style>

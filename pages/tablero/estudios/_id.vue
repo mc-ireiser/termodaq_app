@@ -1,10 +1,12 @@
 <template>
-  <div v-if="muestreo">
+  <div v-if="muestreo" onkeydown="return (event.keyCode == 116)">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li v-if="ficha" class="breadcrumb-item active" aria-current="page">
           Muestreo: {{ficha.titulo}} - {{ficha.lugar}} -
-          <a href="/tablero/estudios/listado">volver al listado</a>
+          <a
+            href="/tablero/estudios/listado"
+          >volver al listado</a>
         </li>
         <li v-else class="breadcrumb-item active" aria-current="page">
           Muestreo: N/A - N/A -
@@ -16,28 +18,32 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-
             <div v-if="ficha">
               <div class="card mx-4 pl-2">
                 <h5 class="my-2">Titulo: {{ficha.titulo}}</h5>
-                <h6>Lugar: {{ficha.lugar}}</h6>              
+                <h6>Lugar: {{ficha.lugar}}</h6>
               </div>
 
               <div class="card mx-4 pl-2">
-                <h6 class="my-2">descripcion</h6>
-                <p>{{ficha.descripcion}}</p>
+                <h6 class="my-2">Descripcion</h6>
+                <p class="mt-2">{{ficha.descripcion}}</p>
               </div>
 
               <div class="card mx-4 pl-2">
                 <h6 class="my-2">Investigadores</h6>
-                <p></p>
+                <div v-if="perfil" class="mt-2">
+                  <h6>{{userData.nombre}} {{userData.apellido}}</h6>
+                  <h6>{{userData.institucion}}</h6>
+                  <h6>{{userData.pais}}</h6>
+                  <hr>
+                </div>
               </div>
             </div>
 
             <div v-else>
               <div class="card mx-4 pl-2">
                 <h5 class="my-2">Titulo: N/A</h5>
-                <h6>Lugar: N/A</h6>              
+                <h6>Lugar: N/A</h6>
               </div>
 
               <div class="card mx-4 pl-2">
@@ -59,8 +65,11 @@
                       <i class="icon-speedometer"></i>
                     </div>
                     <div class="h4 mb-0">{{aguaAvg.toFixed(4)}} ℃</div>
-                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Agua</small><br><br>
-                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aguaMin}} ℃</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Agua</small>
+                    <br />
+                    <br />
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aguaMin}} ℃</small>
+                    <br />
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{aguaMax}} ℃</small>
                     <div class="progress-xs mt-3 mb-0 progress">
                       <div
@@ -70,8 +79,7 @@
                         :aria-valuenow="aguaAvg"
                         class="progress-bar bg-danger"
                         style="width: 100%;"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -81,8 +89,11 @@
                       <i class="icon-speedometer"></i>
                     </div>
                     <div class="h4 mb-0">{{aireAvg.toFixed(4)}} ℃</div>
-                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Ambiente</small><br><br>
-                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aireMin}} ℃</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Temp. Ambiente</small>
+                    <br />
+                    <br />
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{aireMin}} ℃</small>
+                    <br />
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{aireMax}} ℃</small>
                     <div class="progress-xs mt-3 mb-0 progress">
                       <div
@@ -92,8 +103,7 @@
                         :aria-valuenow="aireAvg"
                         class="progress-bar bg-primary"
                         style="width: 100%;"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -103,8 +113,11 @@
                       <i class="icon-speedometer"></i>
                     </div>
                     <div class="h4 mb-0">{{presionAvg.toFixed(4)}} kPa</div>
-                    <small class="text-muted text-uppercase font-weight-bold">Avg. Presión</small><br><br>
-                    <small class="text-muted text-uppercase font-weight-bold">MIN {{presionMin}} kPa</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Presión</small>
+                    <br />
+                    <br />
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{presionMin}} kPa</small>
+                    <br />
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{presionMax}} kPa</small>
                     <div class="progress-xs mt-3 mb-0 progress">
                       <div
@@ -114,8 +127,7 @@
                         :aria-valuenow="presionAvg"
                         class="progress-bar bg-success"
                         style="width: 100%;"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -125,8 +137,11 @@
                       <i class="icon-speedometer"></i>
                     </div>
                     <div class="h4 mb-0">{{uvAvg}} UV</div>
-                    <small class="text-muted text-uppercase font-weight-bold">Avg. Indice UV</small><br><br>
-                    <small class="text-muted text-uppercase font-weight-bold">MIN {{uvMin}} UV</small><br>
+                    <small class="text-muted text-uppercase font-weight-bold">Avg. Indice UV</small>
+                    <br />
+                    <br />
+                    <small class="text-muted text-uppercase font-weight-bold">MIN {{uvMin}} UV</small>
+                    <br />
                     <small class="text-muted text-uppercase font-weight-bold">MAX {{uvMax}} UV</small>
                     <div class="progress-xs mt-3 mb-0 progress">
                       <div
@@ -136,8 +151,7 @@
                         :aria-valuenow="uvAvg"
                         class="progress-bar bg-warning"
                         style="width: 100%;"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -146,9 +160,16 @@
 
             <no-ssr>
               <div v-if="muestreo.data" class="card mx-4 pl-2 p-4" style="height: 50vh">
-                <l-map :zoom=15 :center="[muestreo.data[0].latitude || 0, muestreo.data[0].longitude || 0]">
+                <l-map
+                  :zoom="15"
+                  :center="[muestreo.data[0].latitude || 0, muestreo.data[0].longitude || 0]"
+                >
                   <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                  <l-marker v-for="row in muestreo.data" :lat-lng="[row.latitude, row.longitude]" :key="row.id"></l-marker>
+                  <l-marker
+                    v-for="row in muestreo.data"
+                    :lat-lng="[row.latitude, row.longitude]"
+                    :key="row.id"
+                  ></l-marker>
                 </l-map>
               </div>
             </no-ssr>
@@ -158,7 +179,6 @@
                 <Plotly :data="agua" :layout="layoutAgua" :display-mode-bar="true"></Plotly>
               </div>
             </no-ssr>
-              
 
             <no-ssr>
               <div class="card mx-4 pl-2">
@@ -180,7 +200,11 @@
 
             <no-ssr>
               <div id="myDiv" class="card mx-4 pl-2">
-                <Plotly :data="grafica_combinada" :layout="layoutCombinado" :display-mode-bar="true"></Plotly>
+                <Plotly
+                  :data="grafica_combinada"
+                  :layout="layoutCombinado"
+                  :display-mode-bar="true"
+                ></Plotly>
               </div>
             </no-ssr>
 
@@ -214,7 +238,7 @@
                 </tbody>
               </table>
             </div>
-
+            
           </div>
         </div>
       </div>
@@ -223,92 +247,138 @@
 </template>
 
 <script>
-import { Plotly } from 'vue-plotly'
+var ctrlKeyDown = false;
+
+$(document).ready(function() {
+  $(document).on("keydown", keydown);
+  $(document).on("keyup", keyup);
+});
+
+function keydown(e) {
+  if (
+    (e.which || e.keyCode) == 116 ||
+    ((e.which || e.keyCode) == 82 && ctrlKeyDown)
+  ) {
+    // Pressing F5 or Ctrl+R
+    e.preventDefault();
+  } else if ((e.which || e.keyCode) == 17) {
+    // Pressing  only Ctrl
+    ctrlKeyDown = true;
+  }
+}
+
+function keyup(e) {
+  // Key up Ctrl
+  if ((e.which || e.keyCode) == 17) ctrlKeyDown = false;
+}
+
+import { Plotly } from "vue-plotly";
 
 export default {
-  layout: 'tablero',
+  layout: "tablero",
 
   data() {
     return {
+      perfil: false,
+      edit: false,
+      muestreos_count: 0,
+      userData: {
+        nombre: "",
+        apellido: "",
+        bio: "",
+        telefono: "",
+        institucion: "",
+        pais: "",
+        id: "",
+        userId: ""
+      },
       muestreo: [],
       ficha: {},
-      agua:[{
-        x: [],
-        y: [],
-        type:"scatter",
-        xlabel: 'tiempo',
-        name: 'Temp. Agua (C)',
-        showlegend: true
-      }],
-      aire:[{
-        x: [],
-        y: [],
-        type:"scatter",
-        name: 'Temp. Aire (C)',
-        showlegend: true
-      }],
-      uv:[{
-        x: [],
-        y: [],
-        type:"scatter",
-        name: 'Indice UV',
-        showlegend: true
-      }],
-      presion:[{
-        x: [],
-        y: [],
-        type:"scatter",
-        name: 'Presión (kPa)',
-        showlegend: true
-      }],
-      layoutAgua:{
+      agua: [
+        {
+          x: [],
+          y: [],
+          type: "scatter",
+          xlabel: "tiempo",
+          name: "Temp. Agua (C)",
+          showlegend: true
+        }
+      ],
+      aire: [
+        {
+          x: [],
+          y: [],
+          type: "scatter",
+          name: "Temp. Aire (C)",
+          showlegend: true
+        }
+      ],
+      uv: [
+        {
+          x: [],
+          y: [],
+          type: "scatter",
+          name: "Indice UV",
+          showlegend: true
+        }
+      ],
+      presion: [
+        {
+          x: [],
+          y: [],
+          type: "scatter",
+          name: "Presión (kPa)",
+          showlegend: true
+        }
+      ],
+      layoutAgua: {
         title: "Temperatura del agua",
         yaxis: {
-          title: 'Temp. (C)',
+          title: "Temp. (C)"
         },
         xaxis: {
-          title: 'Tiempo',
+          title: "Tiempo",
           automargin: true
         }
       },
-      layoutAire:{
+      layoutAire: {
         title: "Temperatura del aire",
         yaxis: {
-          title: 'Temp. (C)',
+          title: "Temp. (C)"
         },
         xaxis: {
-          title: 'Tiempo',
+          title: "Tiempo",
           automargin: true
         }
       },
-      layoutUv:{
+      layoutUv: {
         title: "Indice UV",
         yaxis: {
-          title: 'Indice UV',
+          title: "Indice UV"
         },
         xaxis: {
-          title: 'Tiempo',
+          title: "Tiempo",
           automargin: true
         }
       },
-      layoutPresion:{
+      layoutPresion: {
         title: "Presión",
         yaxis: {
-          title: 'Presión (kPa)',
+          title: "Presión (kPa)"
         },
         xaxis: {
-          title: 'Tiempo',
+          title: "Tiempo",
           automargin: true
         }
       },
-      layoutCombinado:{
+      layoutCombinado: {
         title: "Superposición de variables",
         xaxis: {
-          title: 'Tiempo',
+          title: "Tiempo",
           automargin: true
         }
       }
-    }
+    };
   },
 
   components: {
@@ -317,73 +387,73 @@ export default {
 
   computed: {
     grafica_combinada: function() {
-      let data = []
-      data.push(this.agua[0])
-      data.push(this.aire[0])
-      data.push(this.uv[0])
-      data.push(this.presion[0])
-      return data
+      let data = [];
+      data.push(this.agua[0]);
+      data.push(this.aire[0]);
+      data.push(this.uv[0]);
+      data.push(this.presion[0]);
+      return data;
     },
 
     aguaMin: function() {
-      let x = this.agua[0].y
-      return Math.min(...x)
+      let x = this.agua[0].y;
+      return Math.min(...x);
     },
 
     aguaMax: function() {
-      let x = this.agua[0].y
-      return Math.max(...x)
+      let x = this.agua[0].y;
+      return Math.max(...x);
     },
 
     aguaAvg() {
-      let x = this.agua[0].y
-      return x.reduce((a,b) => a + b, 0) / x.length
+      let x = this.agua[0].y;
+      return x.reduce((a, b) => a + b, 0) / x.length;
     },
 
     aireMin: function() {
-      let x = this.aire[0].y
-      return Math.min(...x)
+      let x = this.aire[0].y;
+      return Math.min(...x);
     },
 
     aireMax: function() {
-      let x = this.aire[0].y
-      return Math.max(...x)
+      let x = this.aire[0].y;
+      return Math.max(...x);
     },
 
     aireAvg() {
-      let x = this.aire[0].y
-      return x.reduce((a,b) => a + b, 0) / x.length
+      let x = this.aire[0].y;
+      return x.reduce((a, b) => a + b, 0) / x.length;
     },
 
     presionMin: function() {
-      let x = this.presion[0].y
-      return Math.min(...x)
+      let x = this.presion[0].y;
+      return Math.min(...x);
     },
 
     presionMax: function() {
-      let x = this.presion[0].y
-      return Math.max(...x)
+      let x = this.presion[0].y;
+      return Math.max(...x);
     },
 
     presionAvg() {
-      let x = this.presion[0].y
-      return x.reduce((a,b) => a + b, 0) / x.length
+      let x = this.presion[0].y;
+      return x.reduce((a, b) => a + b, 0) / x.length;
     },
 
     uvMin: function() {
-      let x = this.uv[0].y
-      return Math.min(...x)
+      let x = this.uv[0].y;
+      return Math.min(...x);
     },
 
     uvMax: function() {
-      let x = this.uv[0].y
-      return Math.max(...x)
+      let x = this.uv[0].y;
+      return Math.max(...x);
     },
 
     uvAvg() {
-      let x = this.uv[0].y
-      return parseInt(x.reduce((a,b) => a + b, 0) / x.length)
-    },
+      let x = this.uv[0].y;
+      return parseInt(x.reduce((a, b) => a + b, 0) / x.length);
+    }
   },
 
   asyncData(context) {
@@ -394,81 +464,109 @@ export default {
 
   async mounted() {
     let env = require("~/const/env.json");
-    let token = localStorage.getItem("token")
-    let userId = localStorage.getItem("userId")
-    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
-    let apiToken = ""
-    let idMuestreo = this.$route.params.id
-    let self = this
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
+    let urlToken = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let apiToken = "";
+    let idMuestreo = this.$route.params.id;
+    let self = this;
 
     if (!token) {
-      this.$router.push('/auth/login')
+      this.$router.push("/auth/login");
     }
 
-    let urlEstudios = `${env.api_host}/estudio/${idMuestreo}?filter[include]=ficha&access_token=${token}`
-    await this.$axios.$get(urlEstudios)
- 
-    .then(function(response) {
-      self.muestreo = response
-      self.ficha = response.ficha
-      response.data.forEach(element => {
-        self.agua[0].x.push(element.date + '-' + element.time)
-        self.aire[0].x.push(element.date + '-' + element.time)
-        self.uv[0].x.push(element.date + '-' + element.time)
-        self.presion[0].x.push(element.date + '-' + element.time)
-        self.agua[0].y.push(element.tempWater)
-        self.aire[0].y.push(element.tempAir)
-        self.uv[0].y.push(element.uv)
-        self.presion[0].y.push(element.pressure)
+    let urlEstudios = `${env.api_host}/estudio/${idMuestreo}?filter[include]=ficha&access_token=${token}`;
+    await this.$axios
+      .$get(urlEstudios)
+
+      .then(function(response) {
+        self.muestreo = response;
+        self.ficha = response.ficha;
+        response.data.forEach(element => {
+          self.agua[0].x.push(element.date + " " + element.time);
+          self.aire[0].x.push(element.date + " " + element.time);
+          self.uv[0].x.push(element.date + " " + element.time);
+          self.presion[0].x.push(element.date + " " + element.time);
+          self.agua[0].y.push(element.tempWater);
+          self.aire[0].y.push(element.tempAir);
+          self.uv[0].y.push(element.uv);
+          self.presion[0].y.push(element.pressure);
+        });
       })
-    })
 
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode)
-      } else {
-        console.log(e);
-      }
-    })
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
+          console.log(error.statusCode);
+        } else {
+          console.log(e);
+        }
+      });
 
-    const actualToken = await this.$axios.$get(url)
-    
-    .then(function(response) {
-      response.forEach(element => {
-        if (element.id === token) {
-          apiToken = token
-          console.log('token-presente')
+    let urlPerfil = `${env.api_host}/usuario/${userId}/perfil?access_token=${token}`;
+    await this.$axios
+      .$get(urlPerfil)
+
+      .then(function(response) {
+        self.perfil = true;
+        self.userData = response;
+      })
+
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
+          console.log(error.statusCode);
+
+          if (error.code == "MODEL_NOT_FOUND") {
+            self.perfil = false;
+          }
+        } else {
+          console.log(e);
+        }
+      });
+
+    await this.$axios
+      .$get(urlToken)
+
+      .then(function(response) {
+        response.forEach(element => {
+          if (element.id === token) {
+            apiToken = token;
+            console.log("token-presente");
+          }
+        });
+
+        if (token != apiToken) {
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
         }
       })
 
-      if (token != apiToken) {
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
-        this.$router.push("/auth/login");
-      }
-    })
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
 
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-        localStorage.setItem("token", null)
-        localStorage.setItem("userId", null)
-        this.$router.push("/auth/login")
-      } else {
-        console.log(e);
-      }
-    })
-  },
+          if ((error.statusCode = 401)) {
+            console.log("Acceso no autorizado, inicie sesión nuevamente");
+          }
 
-  methods: {
+          self.$toast.error("Acceso no autorizado, inicie sesión nuevamente", {
+            duration: 5000,
+            iconPack: "fontawesome",
+            icon: "check"
+          });
 
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        } else {
+          console.log(e);
+        }
+      });
   }
 };
 </script>
-
-<style scoped>
-</style>

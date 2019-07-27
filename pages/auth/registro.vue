@@ -23,10 +23,11 @@
                       class="form-control form-control"
                       id="_usuario"
                       required
-                    />        
-                    <small v-if="error.username" class="form-text text-danger">
-                      El nombre de usuario ingresado ya se encuentra registrado en el sistema. Por favor intente nuevamente utilizando un nombre de usuario distinto.
-                    </small>
+                    />
+                    <small
+                      v-if="error.username"
+                      class="form-text text-danger"
+                    >El nombre de usuario ingresado ya se encuentra registrado en el sistema. Por favor intente nuevamente utilizando un nombre de usuario distinto.</small>
                   </div>
                   <div role="group" class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -43,9 +44,10 @@
                       id="_email"
                       required
                     />
-                    <small v-if="error.email" class="form-text text-danger">
-                      El email ingresado ya se encuentra registrado en el sistema. Por favor intente nuevamente utilizando un email distinto.
-                    </small>
+                    <small
+                      v-if="error.email"
+                      class="form-text text-danger"
+                    >El email ingresado ya se encuentra registrado en el sistema. Por favor intente nuevamente utilizando un email distinto.</small>
                   </div>
                   <div role="group" class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -79,7 +81,11 @@
                       required
                     />
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block" :disabled="registroBtn">Crear una cuenta</button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-block"
+                    :disabled="registroBtn"
+                  >Crear una cuenta</button>
                 </form>
               </div>
               <div class="card-footer p-4">
@@ -100,9 +106,7 @@
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
       registroBtn: false,
@@ -116,71 +120,74 @@ export default {
         username: false,
         email: false
       }
-    }
+    };
   },
 
   asyncData(context) {
     return {
       project: "SPC"
-    }
+    };
   },
 
   async mounted() {
     let env = require("~/const/env.json");
-    let token = localStorage.getItem("token")
-    let userId = localStorage.getItem("userId")
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
     let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
-    let apiToken = ""
-    let self = this
+    let apiToken = "";
+    let self = this;
 
-    await this.$axios.$get(url)
+    await this.$axios
+      .$get(url)
 
-    .then(function(response) {
-      response.forEach(element => {
-        if (element.id === token) {
-          apiToken = token
-          console.log('token-presente')
-          self.$router.push("/tablero/estudios/listado")
-        }
+      .then(function(response) {
+        response.forEach(element => {
+          if (element.id === token) {
+            apiToken = token;
+            console.log("token-presente");
+            self.$router.push("/tablero/estudios/listado");
+          }
+        });
       })
-    })
 
-    .catch(function(e) {
-      if (e.response) {
-        let error = e.response.data.error;
-        let detalles = error.details;
-        console.log(error.statusCode);
-      } else {
-        console.log(e);
-      }
-    })
+      .catch(function(e) {
+        if (e.response) {
+          let error = e.response.data.error;
+          let detalles = error.details;
+          console.log(error.statusCode);
+        } else {
+          console.log(e);
+        }
+      });
   },
 
   methods: {
     onSubmit(params) {
-      this.registroBtn = true
+      this.registroBtn = true;
 
-      if (this.userData.password.trim() !== this.userData.password_confirm.trim()) {
-        this.$toast.error('La contraseña no coincide, por favor verifique', {
+      if (
+        this.userData.password.trim() !== this.userData.password_confirm.trim()
+      ) {
+        this.$toast.error("La contraseña no coincide, por favor verifique", {
           duration: 3500,
-          iconPack: 'fontawesome',
-          icon : 'times'
-        })
-        return
+          iconPack: "fontawesome",
+          icon: "times"
+        });
+        return;
       }
 
-      let userData = this.userData
-      let env = require('~/const/env.json');
-      let url = env.api_host + '/usuario'
-      let self = this
+      let userData = this.userData;
+      let env = require("~/const/env.json");
+      let url = env.api_host + "/usuario";
+      let self = this;
 
       this.$axios({
-        method: 'post',
+        method: "post",
         url: url,
-        mode: 'no-cors',
+        mode: "no-cors",
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
         withCredentials: false,
         data: {
@@ -190,52 +197,47 @@ export default {
         }
       })
 
-      .then(function (response) {
-        self.registroBtn = false
+        .then(function(response) {
+          self.registroBtn = false;
 
-        self.$toast.success('La cuenta fue creada de manera exitosa.', {
-          duration: 3500,
-          iconPack: 'fontawesome',
-          icon : 'check'
-        })
-        
-        self.$router.push('/auth/login')
-      })
-
-      .catch(function (e) {
-        self.registroBtn = false
-
-        if (e.response) {
-          let error = e.response.data.error
-          let detalles = error.details
-
-          if (error.details.codes.username[0] == 'uniqueness') {
-            self.error.username = true
-          }
-
-          if (error.details.codes.email[0] == 'uniqueness') {
-            self.error.email = true
-          }
-
-          self.$toast.error('Error, verifique los datos', {
+          self.$toast.success("La cuenta fue creada de manera exitosa.", {
             duration: 3500,
-            iconPack: 'fontawesome',
-            icon : 'times'
-          })
+            iconPack: "fontawesome",
+            icon: "check"
+          });
 
-        } else {
-          console.log(e)
-        }
-      }) 
+          self.$router.push("/auth/login");
+        })
 
+        .catch(function(e) {
+          self.registroBtn = false;
+
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
+
+            if (error.details.codes.username[0] == "uniqueness") {
+              self.error.username = true;
+            }
+
+            if (error.details.codes.email[0] == "uniqueness") {
+              self.error.email = true;
+            }
+
+            self.$toast.error("Error, verifique los datos", {
+              duration: 3500,
+              iconPack: "fontawesome",
+              icon: "times"
+            });
+          } else {
+            console.log(e);
+          }
+        });
     },
 
     login(params) {
-      this.$router.push('/auth/login')
+      this.$router.push("/auth/login");
     }
   }
 };
 </script>
-
-<style scoped>
-</style>
