@@ -295,11 +295,11 @@
                     <form>
                       <div class="form-group">
                         <label for="titulo">Titulo</label>
-                        <input v-model="ficha.titulo" type="text" class="form-control" id="titulo" placeholder="Muestreo TDAQ-001">
+                        <input v-model="ficha.titulo" type="text" class="form-control" id="titulo" placeholder="Muestreo TDAQ-001" required>
                       </div>
                       <div class="form-group">
                         <label for="lugar">Lugar</label>
-                        <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" placeholder="Río TDAQ">
+                        <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" placeholder="Río TDAQ" required>
                       </div>
                       <div class="form-group">
                         <label for="descripcion">Descripcion</label>
@@ -701,6 +701,15 @@ export default {
       let urlFicha = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`;
       let self = this;
 
+      if (!this.ficha.titulo || this.ficha.lugar) {
+        this.$toast.info("Campos titulo y lugar son requeridos.", {
+          duration: 3500,
+          iconPack: "fontawesome",
+          icon: "check"
+        });
+        return
+      }
+
       if (this.ficha.id) {
         await this.$axios
 
@@ -720,7 +729,7 @@ export default {
             let error = e.response.data.error;
             let detalles = error.details;
             console.log(error.statusCode);
-            self.$toast.success("Error editando ficha.", {
+            self.$toast.error("Error editando ficha.", {
               duration: 3500,
               iconPack: "fontawesome",
               icon: "check"
@@ -756,7 +765,7 @@ export default {
             self.ficha.lugar = '';
             self.ficha.descripcion = '';
 
-            self.$toast.success("Error creando ficha.", {
+            self.$toast.error("Error creando ficha.", {
               duration: 3500,
               iconPack: "fontawesome",
               icon: "check"
@@ -776,12 +785,47 @@ export default {
       let token = localStorage.getItem("token");
       let userId = localStorage.getItem("userId");
       let idMuestreo = this.$route.params.id;
-      let urlDelete = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`;
+      let urlDeleteEstudio = `${env.api_host}/estudio/${idMuestreo}?access_token=${token}`;
+      let urlDeleteFicha = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`;
       let self = this;
+
+      if (this.ficha.id) {
+      
+        await this.$axios
+
+        .$delete(urlDeleteFicha)
+
+        .then(function(response) {
+          self.$toast.success("Ficha eliminada.", {
+            duration: 3500,
+            iconPack: "fontawesome",
+            icon: "check"
+          });
+
+          $('#modalEliminar').modal('toggle')
+          self.$router.push("/tablero/estudios/listado");
+        })
+
+        .catch(function(e) {
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
+            console.log(error.statusCode);
+            self.$toast.success("Error eliminando ficha", {
+              duration: 3500,
+              iconPack: "fontawesome",
+              icon: "check"
+            });
+
+          } else {
+            console.log(e);
+          }
+        });
+      }
 
       await this.$axios
 
-      .$delete(urlDelete)
+      .$delete(urlDeleteEstudio)
 
       .then(function(response) {
         self.$toast.success("Estudio eliminado.", {
@@ -799,7 +843,7 @@ export default {
           let error = e.response.data.error;
           let detalles = error.details;
           console.log(error.statusCode);
-          self.$toast.success("Error eliminando", {
+          self.$toast.success("Error eliminando estudio", {
             duration: 3500,
             iconPack: "fontawesome",
             icon: "check"
@@ -809,15 +853,8 @@ export default {
           console.log(e);
         }
       });
+
     }
   }
 };
 </script>
-
-<style scoped>
- .sk-rotating-plane{
-   background-color: #333;
-  -webkit-animation: sk-rotatePlane 1.2s infinite ease-in-out;
-  animation: sk-rotatePlane 1.2s infinite ease-in-out;
- }
-</style>
