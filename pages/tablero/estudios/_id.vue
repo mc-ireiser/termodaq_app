@@ -2,15 +2,15 @@
   <div v-if="ready">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li v-if="ficha" class="breadcrumb-item active" aria-current="page">
+        <li v-if="ficha.titulo" class="breadcrumb-item active" aria-current="page">
           Muestreo: {{ficha.titulo}} - {{ficha.lugar}} -
           <a
             href="/tablero/estudios/listado"
-          >volver al listado</a>
+          >Volver al listado</a>
         </li>
         <li v-else class="breadcrumb-item active" aria-current="page">
-          Muestreo: N/A - N/A -
-          <a href="/tablero/estudios/listado">volver al listado</a>
+          Muestreo: {{muestreo.id}} -
+          <a href="/tablero/estudios/listado">Volver al listado</a>
         </li>
       </ol>
     </nav>
@@ -148,7 +148,7 @@
               </div>
             </div>
 
-            <div v-if="!edit" class="card mx-4 p-2">
+            <div v-if="!edit" class="card mx-4 p-2" style="overflow-x: scroll;">
               <h5 class="my-2">Resultados por día</h5>
               <small>Aire = Temp Ambiente (℃)</small>
               <small>Agua = Temp Agua (℃)</small>
@@ -248,7 +248,7 @@
                 </div>
               </no-ssr>
 
-              <div class="card mx-4 p-4 d-md-down-none">
+              <div class="card mx-4 p-4 d-md-down-none" style="overflow-x: scroll;">
                 <h5 class="my-2 mb-4">Data RAW</h5>
                 <table class="table table-hover">
                   <thead>
