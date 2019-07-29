@@ -701,7 +701,7 @@ export default {
       let urlFicha = `${env.api_host}/estudio/${idMuestreo}/ficha?access_token=${token}`;
       let self = this;
 
-      if (!this.ficha.titulo || this.ficha.lugar) {
+      if (!this.ficha.titulo || !this.ficha.lugar) {
         this.$toast.info("Campos titulo y lugar son requeridos.", {
           duration: 3500,
           iconPack: "fontawesome",
