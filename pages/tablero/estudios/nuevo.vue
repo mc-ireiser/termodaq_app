@@ -19,11 +19,11 @@
                 </div>
                 <div class="form-group">
                   <label for="titulo">Titulo</label>
-                  <input v-model="ficha.titulo" type="text" class="form-control" id="titulo" placeholder="Muestreo TDAQ-001" required>
+                  <input v-model="ficha.titulo" type="text" class="form-control" id="titulo" required>
                 </div>
                 <div class="form-group">
                   <label for="lugar">Lugar</label>
-                  <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" placeholder="Río TDAQ" required>
+                  <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" required>
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripcion</label>
