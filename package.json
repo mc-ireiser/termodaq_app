@@ -5,7 +5,7 @@
   "author": "Jesus Rodriguez",
   "private": true,
   "scripts": {
-    "dev": "nuxt --port 3001",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
