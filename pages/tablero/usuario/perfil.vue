@@ -38,7 +38,13 @@
                   </div>
                   <div role="group" class="input-group mb-3">
                     <label for="bio" class="col-sm-6 col-form-label">Bio</label>
-                    <textarea type="text" :readonly="!edit" :class="edit? 'form-control' : 'form-control-plaintext' " id="bio" v-model="userData.bio" value=""></textarea>
+                    <textarea
+                      v-model="userData.bio"
+                      :class="edit? 'form-control' : 'form-control-plaintext' "
+                      :readonly="!edit"
+                      type="text"
+                      id="bio"
+                    ></textarea>
                     <!--
                       <textarea type="text" :readonly="!edit" :class="edit? 'form-control' : 'form-control-plaintext' " id="bio" v-model="userData.bio" value=""></textarea>
                     -->
@@ -101,8 +107,8 @@
             <nuxt-link class="nav-link" to="/tablero/estudios/listado">
               <div class="card-body bg-dark p-0 clearfix">
                 <i class="fas fa-vial bg-primary p-4 px-5 font-4xl mr-3 float-left"></i>
-                  <div class="h2 text-primary mb-0 pt-3">{{muestreos_count || 0}}</div>
-                  <div class="text-light text-uppercase font-weight-bold font-xs">Estudios realizados</div>
+                <div class="h2 text-primary mb-0 pt-3">{{muestreos_count || 0}}</div>
+                <div class="text-light text-uppercase font-weight-bold font-xs">Estudios realizados</div>
               </div>
             </nuxt-link>
           </div>
@@ -111,9 +117,7 @@
     </div>
   </div>
   <div v-else>
-    <div class="alert alert-primary" role="alert">
-      Cargando datos.
-    </div>
+    <div class="alert alert-primary" role="alert">Cargando datos.</div>
   </div>
 </template>
 
@@ -241,7 +245,6 @@ export default {
       });
 
     this.ready = true;
-
   },
 
   methods: {

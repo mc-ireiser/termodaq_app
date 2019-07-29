@@ -18,16 +18,29 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-
-            <div v-if="!ficha.titulo" class="mx-4 alert alert-primary" role="alert">
-              Presione editar y proceda a completar los campos para crear una ficha de estudio.
-            </div>
+            <div
+              v-if="!ficha.titulo"
+              class="mx-4 alert alert-primary"
+              role="alert"
+            >Presione editar y proceda a completar los campos para crear una ficha de estudio.</div>
 
             <div v-if="!edit" class="mx-4 mb-4 pl-2 text-right">
-              <button type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#modalEditar">
-                <span class="fas fa-edit"></span> Editar</button>
-              <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#modalEliminar">
-                <span class="fas fa-trash"></span> Eliminar</button>
+              <button
+                type="button"
+                class="btn btn-warning ml-2"
+                data-toggle="modal"
+                data-target="#modalEditar"
+              >
+                <span class="fas fa-edit"></span> Editar
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger ml-2"
+                data-toggle="modal"
+                data-target="#modalEliminar"
+              >
+                <span class="fas fa-trash"></span> Eliminar
+              </button>
             </div>
 
             <div v-if="ficha.titulo">
@@ -48,18 +61,16 @@
                 <h6>{{userData.nombre}} {{userData.apellido}}</h6>
                 <h6>{{userData.institucion}}</h6>
                 <h6>{{userData.pais}}</h6>
-                <hr>
+                <hr />
               </div>
               <div v-else>
-                <div class="alert alert-primary" role="alert">
-                  Complete su perfil.
-                </div>
+                <div class="alert alert-primary" role="alert">Complete su perfil.</div>
               </div>
-            </div>            
+            </div>
 
             <div v-if="!edit" class="card mx-4 p-2">
               <h5 class="mt-2">Resultados Generales</h5>
-              <hr>
+              <hr />
               <div class="row">
                 <div class="col-sm">
                   <div class="card-body">
@@ -157,33 +168,72 @@
               <table class="table table-hover mt-4">
                 <thead>
                   <tr>
-                    <th scope="col">Fecha<br>(A-M-D)</th>
-                    <th scope="col">Aire<br>(min)</th>
-                    <th scope="col">Aire<br>(max)</th>
-                    <th scope="col">Aire<br>(avg)</th>
-                    <th scope="col">Agua<br>(min)</th>
-                    <th scope="col">Agua<br>(max)</th>
-                    <th scope="col">Agua<br>(avg)</th>
-                    <th scope="col">Presión<br>(min)</th>
-                    <th scope="col">Presión<br>(max)</th>
-                    <th scope="col">Presión<br>(avg)</th>
-                    <th scope="col">UV<br>(min)</th>
-                    <th scope="col">UV<br>(max)</th>
-                    <th scope="col">UV<br>(avg)</th>
+                    <th scope="col">
+                      Fecha
+                      <br />(A-M-D)
+                    </th>
+                    <th scope="col">
+                      Aire
+                      <br />(min)
+                    </th>
+                    <th scope="col">
+                      Aire
+                      <br />(max)
+                    </th>
+                    <th scope="col">
+                      Aire
+                      <br />(avg)
+                    </th>
+                    <th scope="col">
+                      Agua
+                      <br />(min)
+                    </th>
+                    <th scope="col">
+                      Agua
+                      <br />(max)
+                    </th>
+                    <th scope="col">
+                      Agua
+                      <br />(avg)
+                    </th>
+                    <th scope="col">
+                      Presión
+                      <br />(min)
+                    </th>
+                    <th scope="col">
+                      Presión
+                      <br />(max)
+                    </th>
+                    <th scope="col">
+                      Presión
+                      <br />(avg)
+                    </th>
+                    <th scope="col">
+                      UV
+                      <br />(min)
+                    </th>
+                    <th scope="col">
+                      UV
+                      <br />(max)
+                    </th>
+                    <th scope="col">
+                      UV
+                      <br />(avg)
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="obj in groupData" :key="obj.id">
                     <td>{{ obj.date }}</td>
-                    
+
                     <td>{{ Math.min(...obj.data.tempAir) }}</td>
                     <td>{{ Math.max(...obj.data.tempAir) }}</td>
                     <td>{{ (obj.data.tempAir.reduce((a, b) => a + b, 0) / obj.data.tempAir.length).toFixed(4) }}</td>
-                    
+
                     <td>{{ Math.min(...obj.data.tempWater) }}</td>
                     <td>{{ Math.max(...obj.data.tempWater) }}</td>
                     <td>{{ (obj.data.tempWater.reduce((a, b) => a + b, 0) / obj.data.tempWater.length).toFixed(4) }}</td>
-                    
+
                     <td>{{ Math.min(...obj.data.pressure) }}</td>
                     <td>{{ Math.max(...obj.data.pressure) }}</td>
                     <td>{{ (obj.data.pressure.reduce((a, b) => a + b, 0) / obj.data.pressure.length).toFixed(4) }}</td>
@@ -282,7 +332,14 @@
             </div>
 
             <!-- Modal Editar -->
-            <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+            <div
+              class="modal fade"
+              id="modalEditar"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="modalEditarLabel"
+              aria-hidden="true"
+            >
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -295,15 +352,34 @@
                     <form>
                       <div class="form-group">
                         <label for="titulo">Titulo</label>
-                        <input v-model="ficha.titulo" type="text" class="form-control" id="titulo" placeholder="Muestreo TDAQ-001" required>
+                        <input
+                          v-model="ficha.titulo"
+                          type="text"
+                          class="form-control"
+                          id="titulo"
+                          placeholder="Muestreo TDAQ-001"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label for="lugar">Lugar</label>
-                        <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" placeholder="Río TDAQ" required>
+                        <input
+                          v-model="ficha.lugar"
+                          type="text"
+                          class="form-control"
+                          id="lugar"
+                          placeholder="Río TDAQ"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label for="descripcion">Descripcion</label>
-                        <textarea v-model="ficha.descripcion" class="form-control" id="descripcion" rows="3"></textarea>
+                        <textarea
+                          v-model="ficha.descripcion"
+                          class="form-control"
+                          id="descripcion"
+                          rows="3"
+                        ></textarea>
                       </div>
                     </form>
                   </div>
@@ -316,7 +392,14 @@
             </div>
 
             <!-- Modal Eliminar -->
-            <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+            <div
+              class="modal fade"
+              id="modalEliminar"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="modalEliminarLabel"
+              aria-hidden="true"
+            >
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -325,9 +408,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
-                    ¿Está seguro de eliminar este estudio de forma permanente?
-                  </div>
+                  <div class="modal-body">¿Está seguro de eliminar este estudio de forma permanente?</div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger" @click="eliminarEstudio()">Eliminar</button>
@@ -335,16 +416,13 @@
                 </div>
               </div>
             </div>
-              
           </div>
         </div>
       </div>
     </div>
   </div>
   <div v-else>
-    <div class="alert alert-primary" role="alert">
-      Cargando datos.
-    </div>
+    <div class="alert alert-primary" role="alert">Cargando datos.</div>
   </div>
 </template>
 
@@ -564,7 +642,7 @@ export default {
 
       .then(async function(response) {
         self.muestreo = response;
-        
+
         if (response.ficha) {
           self.ficha = response.ficha;
         }
@@ -580,8 +658,7 @@ export default {
           self.presion[0].y.push(element.pressure);
         });
 
- //       let groupedResults = _.groupBy(results, (result) => moment(result['Date'], 'DD/MM/YYYY').startOf('isoWeek'));
-
+        //       let groupedResults = _.groupBy(results, (result) => moment(result['Date'], 'DD/MM/YYYY').startOf('isoWeek'));
 
         // this gives an object with dates as keys
         const groups = await response.data.reduce((groups, data) => {
@@ -589,13 +666,13 @@ export default {
           const date = data.date;
           if (!groups[date]) {
             groups[date] = {
-              'tempAir': [],
-              'tempWater': [],
-              'pressure': [],
-              'uv': [],
+              tempAir: [],
+              tempWater: [],
+              pressure: [],
+              uv: []
             };
           }
-          console.log(groups[date])
+          console.log(groups[date]);
           groups[date].tempAir.push(data.tempAir);
           groups[date].tempWater.push(data.tempWater);
           groups[date].pressure.push(data.pressure);
@@ -604,15 +681,14 @@ export default {
         }, {});
 
         // Edit: to add it in the array format instead
-        const groupArrays = await Object.keys(groups).map((date) => {
+        const groupArrays = await Object.keys(groups).map(date => {
           return {
             date,
             data: groups[date]
           };
         });
 
-        self.groupData = groupArrays
-
+        self.groupData = groupArrays;
       })
 
       .catch(function(e) {
@@ -688,7 +764,7 @@ export default {
           console.log(e);
         }
       });
-    
+
     this.ready = true;
   },
 
@@ -707,77 +783,75 @@ export default {
           iconPack: "fontawesome",
           icon: "check"
         });
-        return
+        return;
       }
 
       if (this.ficha.id) {
         await this.$axios
 
-        .$put(urlFicha, self.ficha)
+          .$put(urlFicha, self.ficha)
 
-        .then(function(response) {
-          self.ficha = response;
-          self.$toast.success("Ficha editada correctamente.", {
-            duration: 3500,
-            iconPack: "fontawesome",
-            icon: "check"
-          });
-        })
-
-        .catch(function(e) {
-          if (e.response) {
-            let error = e.response.data.error;
-            let detalles = error.details;
-            console.log(error.statusCode);
-            self.$toast.error("Error editando ficha.", {
+          .then(function(response) {
+            self.ficha = response;
+            self.$toast.success("Ficha editada correctamente.", {
               duration: 3500,
               iconPack: "fontawesome",
               icon: "check"
             });
+          })
 
-          } else {
-            console.log(e);
-          }
-        });
-
+          .catch(function(e) {
+            if (e.response) {
+              let error = e.response.data.error;
+              let detalles = error.details;
+              console.log(error.statusCode);
+              self.$toast.error("Error editando ficha.", {
+                duration: 3500,
+                iconPack: "fontawesome",
+                icon: "check"
+              });
+            } else {
+              console.log(e);
+            }
+          });
       } else {
         await this.$axios
 
-        .$post(urlFicha, self.ficha)
+          .$post(urlFicha, self.ficha)
 
-        .then(function(response) {
-          self.ficha = response;
-          self._ficha = true;
-          self.$toast.success("Ficha creada de manera correcta.", {
-            duration: 3500,
-            iconPack: "fontawesome",
-            icon: "check"
-          });
-        })
-
-        .catch(function(e) {
-          if (e.response) {
-            let error = e.response.data.error;
-            let detalles = error.details;
-            console.log(error.statusCode);
-
-            self.ficha.titulo = '';
-            self.ficha.lugar = '';
-            self.ficha.descripcion = '';
-
-            self.$toast.error("Error creando ficha.", {
+          .then(function(response) {
+            self.ficha = response;
+            self._ficha = true;
+            self.$toast.success("Ficha creada de manera correcta.", {
               duration: 3500,
               iconPack: "fontawesome",
               icon: "check"
             });
-          } else {
-            console.log(e);
-          }
-        });
+          })
+
+          .catch(function(e) {
+            if (e.response) {
+              let error = e.response.data.error;
+              let detalles = error.details;
+              console.log(error.statusCode);
+
+              self.ficha.titulo = "";
+              self.ficha.lugar = "";
+              self.ficha.descripcion = "";
+
+              self.$toast.error("Error creando ficha.", {
+                duration: 3500,
+                iconPack: "fontawesome",
+                icon: "check"
+              });
+            } else {
+              console.log(e);
+            }
+          });
       }
 
-      this.edit = false
-      $('#modalEditar').modal('toggle')
+      this.edit = false;
+      $("#modalEditar").modal("toggle");
     },
 
     async eliminarEstudio() {
@@ -790,19 +864,49 @@ export default {
       let self = this;
 
       if (this.ficha.id) {
-      
         await this.$axios
 
-        .$delete(urlDeleteFicha)
+          .$delete(urlDeleteFicha)
+
+          .then(function(response) {
+            self.$toast.success("Ficha eliminada.", {
+              duration: 3500,
+              iconPack: "fontawesome",
+              icon: "check"
+            });
+
+            $("#modalEliminar").modal("toggle");
+            self.$router.push("/tablero/estudios/listado");
+          })
+
+          .catch(function(e) {
+            if (e.response) {
+              let error = e.response.data.error;
+              let detalles = error.details;
+              console.log(error.statusCode);
+              self.$toast.success("Error eliminando ficha", {
+                duration: 3500,
+                iconPack: "fontawesome",
+                icon: "check"
+              });
+            } else {
+              console.log(e);
+            }
+          });
+      }
+
+      await this.$axios
+
+        .$delete(urlDeleteEstudio)
 
         .then(function(response) {
-          self.$toast.success("Ficha eliminada.", {
+          self.$toast.success("Estudio eliminado.", {
             duration: 3500,
             iconPack: "fontawesome",
             icon: "check"
           });
 
-          $('#modalEliminar').modal('toggle')
+          $("#modalEliminar").modal("toggle");
           self.$router.push("/tablero/estudios/listado");
         })
 
@@ -811,49 +915,15 @@ export default {
             let error = e.response.data.error;
             let detalles = error.details;
             console.log(error.statusCode);
-            self.$toast.success("Error eliminando ficha", {
+            self.$toast.success("Error eliminando estudio", {
               duration: 3500,
               iconPack: "fontawesome",
               icon: "check"
             });
-
           } else {
             console.log(e);
           }
         });
-      }
-
-      await this.$axios
-
-      .$delete(urlDeleteEstudio)
-
-      .then(function(response) {
-        self.$toast.success("Estudio eliminado.", {
-          duration: 3500,
-          iconPack: "fontawesome",
-          icon: "check"
-        });
-
-        $('#modalEliminar').modal('toggle')
-        self.$router.push("/tablero/estudios/listado");
-      })
-
-      .catch(function(e) {
-        if (e.response) {
-          let error = e.response.data.error;
-          let detalles = error.details;
-          console.log(error.statusCode);
-          self.$toast.success("Error eliminando estudio", {
-            duration: 3500,
-            iconPack: "fontawesome",
-            icon: "check"
-          });
-
-        } else {
-          console.log(e);
-        }
-      });
-
     }
   }
 };

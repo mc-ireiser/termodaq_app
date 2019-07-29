@@ -6,12 +6,14 @@
       </ol>
     </nav>
     <div class="app flex-row">
-      <div class="container">   
+      <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <div v-if="estudios.length == 0 & estudios_sficha.length == 0" class="mx-4 alert alert-primary" role="alert">
-              Usted aun no posee estudios registrados.
-            </div>
+            <div
+              v-if="estudios.length == 0 & estudios_sficha.length == 0"
+              class="mx-4 alert alert-primary"
+              role="alert"
+            >Usted aun no posee estudios registrados.</div>
             <div v-if="estudios.length > 0" class="card mx-4" style="overflow-x: scroll;">
               <table class="table table-hover">
                 <thead>
@@ -27,7 +29,13 @@
                     <td>{{item.titulo}}</td>
                     <td>{{item.lugar}}</td>
                     <td class="d-sm-down-none">{{item.descripcion}}</td>
-                    <td><button type="button" class="btn btn-primary float-right" @click="getMuestreo(item)">Ver</button></td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary float-right"
+                        @click="getMuestreo(item)"
+                      >Ver</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -43,7 +51,13 @@
                 <tbody>
                   <tr v-for="item in estudios_sficha" :key="item">
                     <td>{{item}}</td>
-                    <td><button type="button" class="btn btn-primary float-right" @click="getMuestreoSf(item)">Ver</button></td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary float-right"
+                        @click="getMuestreoSf(item)"
+                      >Ver</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -54,9 +68,7 @@
     </div>
   </div>
   <div v-else>
-    <div class="alert alert-primary" role="alert">
-      Cargando datos.
-    </div>
+    <div class="alert alert-primary" role="alert">Cargando datos.</div>
   </div>
 </template>
 
@@ -156,9 +168,8 @@ export default {
           console.log(e);
         }
       });
-    
-    this.ready = true;
 
+    this.ready = true;
   },
 
   methods: {
