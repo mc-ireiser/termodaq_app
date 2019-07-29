@@ -2,7 +2,7 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Cambiar la contraseña</li>
+        <li class="breadcrumb-item active" aria-current="page">Cambiar contraseña</li>
       </ol>
     </nav>
     <div class="app flex-row">

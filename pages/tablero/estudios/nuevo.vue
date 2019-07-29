@@ -2,7 +2,7 @@
   <div v-if="ready">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Cargar estudio</li>
+        <li class="breadcrumb-item active" aria-current="page">Nuevo estudio</li>
       </ol>
     </nav>
     <div class="app flex-row">
