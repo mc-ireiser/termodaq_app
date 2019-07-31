@@ -23,12 +23,19 @@
                     type="text"
                     class="form-control"
                     id="titulo"
+                    maxlength="100"
                     required
                   />
                 </div>
                 <div class="form-group">
                   <label for="lugar">Lugar</label>
-                  <input v-model="ficha.lugar" type="text" class="form-control" id="lugar" required />
+                  <input 
+                    v-model="ficha.lugar" 
+                    type="text" 
+                    class="form-control" 
+                    id="lugar" 
+                    maxlength="100"
+                    required />
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripcion</label>
@@ -37,6 +44,7 @@
                     class="form-control"
                     id="descripcion"
                     rows="1"
+                    maxlength="250"
                   ></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Cargar estudio</button>

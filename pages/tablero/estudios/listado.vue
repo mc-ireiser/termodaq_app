@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div
-              v-if="estudios.length == 0 & estudios_sficha.length == 0"
+              v-if="estudios.length === 0 & estudios_sficha.length === 0"
               class="mx-4 alert alert-primary"
               role="alert"
             >Usted aun no posee estudios registrados.</div>
@@ -18,17 +18,17 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Titulo</th>
-                    <th scope="col">Lugar</th>
-                    <th scope="col" class="d-sm-down-none">Descripción</th>
-                    <th scope="col"></th>
+                    <th>Titulo</th>
+                    <th>Lugar</th>
+                    <th>Descripción</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in fichas" :key="item.id">
-                    <td>{{item.titulo}}</td>
-                    <td>{{item.lugar}}</td>
-                    <td class="d-sm-down-none">{{item.descripcion}}</td>
+                    <td style="max-width: 20vw;" class="text-truncate">{{item.titulo}}</td>
+                    <td style="max-width: 20vw;" class="text-truncate">{{item.lugar}}</td>
+                    <td style="max-width: 20vw;" class="text-truncate d-sm-down-none">{{item.descripcion}}</td>
                     <td>
                       <button
                         type="button"

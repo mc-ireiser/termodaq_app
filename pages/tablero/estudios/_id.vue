@@ -359,6 +359,7 @@
                           id="titulo"
                           placeholder="Muestreo TDAQ-001"
                           required
+                          maxlength="100"
                         />
                       </div>
                       <div class="form-group">
@@ -370,6 +371,7 @@
                           id="lugar"
                           placeholder="Río TDAQ"
                           required
+                          maxlength="100"
                         />
                       </div>
                       <div class="form-group">
@@ -379,6 +381,7 @@
                           class="form-control"
                           id="descripcion"
                           rows="3"
+                          maxlength="250"
                         ></textarea>
                       </div>
                     </form>

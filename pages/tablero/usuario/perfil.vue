@@ -22,7 +22,7 @@
                       class
                       id="nombre"
                       v-model="userData.nombre"
-                      value
+                      maxlength="70"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
@@ -33,7 +33,7 @@
                       :class="edit? 'form-control' : 'form-control-plaintext' "
                       id="apellido"
                       v-model="userData.apellido"
-                      value
+                      maxlength="70"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
@@ -44,6 +44,7 @@
                       :readonly="!edit"
                       type="text"
                       id="bio"
+                      maxlength="250"
                     ></textarea>
                     <!--
                       <textarea type="text" :readonly="!edit" :class="edit? 'form-control' : 'form-control-plaintext' " id="bio" v-model="userData.bio" value=""></textarea>
@@ -57,7 +58,7 @@
                       :class="edit? 'form-control' : 'form-control-plaintext' "
                       id="telefono"
                       v-model="userData.telefono"
-                      value
+                      maxlength="15"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
@@ -68,7 +69,7 @@
                       :class="edit? 'form-control' : 'form-control-plaintext' "
                       id="institucion"
                       v-model="userData.institucion"
-                      value
+                      maxlength="100"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
@@ -79,7 +80,7 @@
                       :class="edit? 'form-control' : 'form-control-plaintext' "
                       id="pais"
                       v-model="userData.pais"
-                      value
+                      maxlength="50"
                     />
                   </div>
                   <hr />
