@@ -57,7 +57,7 @@
                 <i class="fas fa-sign-out-alt"></i> Salir
               </nuxt-link>
             </li>
-            <li class="nav-item nav-dropdown mt-auto">
+            <li v-if="false" class="nav-item nav-dropdown mt-auto">
               <a class="nav-link nav-dropdown-toggle nav-link-primary" href="#">
                 <i class="fab fa-github-alt"></i> Github
               </a>
