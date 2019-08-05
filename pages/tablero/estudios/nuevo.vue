@@ -29,25 +29,26 @@
                 </div>
                 <div class="form-group">
                   <label for="lugar">Lugar</label>
-                  <input 
-                    v-model="ficha.lugar" 
-                    type="text" 
-                    class="form-control" 
-                    id="lugar" 
+                  <input
+                    v-model="ficha.lugar"
+                    type="text"
+                    class="form-control"
+                    id="lugar"
                     maxlength="100"
-                    required />
+                    required
+                  />
                 </div>
                 <div class="form-group">
-                  <label for="descripcion">Descripcion</label>
+                  <label for="descripcion">Descripción</label>
                   <textarea
                     v-model="ficha.descripcion"
                     class="form-control"
                     id="descripcion"
-                    rows="1"
+                    rows="3"
                     maxlength="250"
                   ></textarea>
                 </div>
-                <button class="btn btn-primary" type="submit">Cargar estudio</button>
+                <button class="btn btn-primary" type="submit" :disabled="subiendo">Cargar estudio</button>
               </form>
             </div>
           </div>
@@ -69,6 +70,7 @@ export default {
   data() {
     return {
       ready: false,
+      subiendo: false,
       rawData: [],
       ficha: {}
     };
@@ -134,15 +136,42 @@ export default {
 
   methods: {
     loadFileAsText() {
+      this.subiendo = true;
       let self = this;
       var fileToLoad = document.getElementById("fileToLoad").files[0];
       var fileReader = new FileReader();
 
+      let fileName = fileToLoad.name;
+
+      console.log(fileName);
+
+      console.log(fileName.includes("termodaq-") && fileName.includes(".txt"));
+
+      if (fileName.includes("termodaq-") && fileName.includes(".txt")) {
+        console.log("Archivo correcto.");
+        this.$toast.success("Archivo correcto.", {
+          duration: 3500,
+          iconPack: "fontawesome",
+          icon: "check"
+        });
+      } else {
+        console.log("Archivo invalido.");
+        this.$toast.error("Archivo invalido.", {
+          duration: 3500,
+          iconPack: "fontawesome",
+          icon: "check"
+        });
+        this.subiendo = false;
+        return;
+      }
+
       if (!fileToLoad) {
+        this.subiendo = false;
         return;
       }
 
       if (!this.ficha.titulo & !this.ficha.lugar) {
+        this.subiendo = false;
         return;
       }
 
@@ -196,6 +225,7 @@ export default {
         })
 
         .catch(function(e) {
+          self.subiendo = false;
           if (e.response) {
             let error = e.response.data.error;
             let detalles = error.details;
@@ -220,6 +250,7 @@ export default {
         .$post(urlFicha, self.ficha)
 
         .then(function(response) {
+          self.subiendo = false;
           self.$router.push("/tablero/estudios/" + estudioID);
           self.$toast.success("Ficha creada de manera correcta.", {
             duration: 3500,
@@ -229,6 +260,7 @@ export default {
         })
 
         .catch(function(e) {
+          self.subiendo = false;
           if (e.response) {
             let error = e.response.data.error;
             let detalles = error.details;

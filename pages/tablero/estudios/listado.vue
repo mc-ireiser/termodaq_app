@@ -19,16 +19,19 @@
                 <thead>
                   <tr>
                     <th>Titulo</th>
-                    <th>Lugar</th>
-                    <th>Descripción</th>
+                    <th class="d-md-down-none">Lugar</th>
+                    <th class="d-md-down-none">Descripción</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in fichas" :key="item.id">
                     <td style="max-width: 20vw;" class="text-truncate">{{item.titulo}}</td>
-                    <td style="max-width: 20vw;" class="text-truncate">{{item.lugar}}</td>
-                    <td style="max-width: 20vw;" class="text-truncate d-sm-down-none">{{item.descripcion}}</td>
+                    <td style="max-width: 20vw;" class="text-truncate d-md-down-none">{{item.lugar}}</td>
+                    <td
+                      style="max-width: 20vw;"
+                      class="text-truncate d-md-down-none"
+                    >{{item.descripcion}}</td>
                     <td>
                       <button
                         type="button"

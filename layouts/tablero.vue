@@ -4,56 +4,56 @@
       <!-- Header content here -->
       <nav class="navbar">
         <a class="d-flex" href="#">
-          <img src="/img/png/termodaq_logo.png" alt="Logo termoDaQ" height="20">
+          <img src="/img/png/termodaq_logo.png" alt="Logo termoDaQ" height="20" />
         </a>
-        <button class="navbar-toggler sidebar-toggler d-lg-none d-xl-none" type="button" data-toggle="sidebar-show">
+        <button
+          class="navbar-toggler sidebar-toggler d-lg-none d-xl-none"
+          type="button"
+          data-toggle="sidebar-show"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
       </nav>
     </header>
     <div class="app-body">
-      <div class="sidebar">
+      <div class="sidebar visible">
         <!-- Sidebar content here -->
         <nav class="sidebar-nav" style="overflow-y: auto;">
           <ul class="nav">
-            <li class="nav-title">Estudios</li>
+            <li class="nav-title">
+              <strong class="h6">Estudios</strong>
+            </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/tablero/estudios/nuevo">
+              <nuxt-link class="nav-link pl-4" to="/tablero/estudios/nuevo">
                 <i class="fas fa-file-alt"></i> Nuevo
               </nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/tablero/estudios/listado">
+              <nuxt-link class="nav-link pl-4" to="/tablero/estudios/listado">
                 <i class="fas fa-list-alt"></i> Listado
               </nuxt-link>
             </li>
-            <li class="nav-title">Colaboraciones</li>
+            <li class="nav-title">
+              <strong class="h6">Colaboraciones</strong>
+            </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/tablero/colaboraciones/listado">
+              <nuxt-link class="nav-link pl-4" to="/tablero/colaboraciones/listado">
                 <i class="fas fa-file-alt"></i> Listado
               </nuxt-link>
             </li>
-            <li class="nav-title">Usuario</li>
+            <li class="nav-title">
+              <strong class="h6">Usuario</strong>
+            </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/tablero/usuario/perfil">
+              <nuxt-link class="nav-link pl-4" to="/tablero/usuario/perfil">
                 <i class="fas fa-user"></i> Perfil
               </nuxt-link>
             </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="fas fa-user-shield"></i> Seguridad
-              </a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-title">Contraseña</li>
-                <li class="nav-item">
-                  <nuxt-link class="nav-link" to="/auth/cambiar-contraseña">
-                    <i class="fas fa-exchange-alt"></i> Cambiar
-                  </nuxt-link>
-                </li>
-              </ul>
-            </li>
+            <nuxt-link class="nav-link pl-4" to="/auth/cambiar-contraseña">
+              <i class="fas fa-exchange-alt"></i> Cambiar Contraseña
+            </nuxt-link>
             <li class="nav-item" @click="logout">
-              <nuxt-link class="nav-link" to="#">
+              <nuxt-link class="nav-link pl-4" to="#">
                 <i class="fas fa-sign-out-alt"></i> Salir
               </nuxt-link>
             </li>
@@ -68,27 +68,47 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/mc-ireiser/termodaq_firmware_atmega328p" target="_blank">
+                  <a
+                    class="nav-link"
+                    href="https://github.com/mc-ireiser/termodaq_firmware_atmega328p"
+                    target="_blank"
+                  >
                     <i class="fas fa-code-branch"></i> Firmware ATmega328p
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/mc-ireiser/termodaq_firmware_attiny85" target="_blank">
+                  <a
+                    class="nav-link"
+                    href="https://github.com/mc-ireiser/termodaq_firmware_attiny85"
+                    target="_blank"
+                  >
                     <i class="fas fa-code-branch"></i> Firmware ATtiny85
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/mc-ireiser/termodaq_link" target="_blank">
+                  <a
+                    class="nav-link"
+                    href="https://github.com/mc-ireiser/termodaq_link"
+                    target="_blank"
+                  >
                     <i class="fas fa-code-branch"></i> LINK
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/mc-ireiser/termodaq_api" target="_blank">
+                  <a
+                    class="nav-link"
+                    href="https://github.com/mc-ireiser/termodaq_api"
+                    target="_blank"
+                  >
                     <i class="fas fa-code-branch"></i> API
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://github.com/mc-ireiser/termodaq_app" target="_blank">
+                  <a
+                    class="nav-link"
+                    href="https://github.com/mc-ireiser/termodaq_app"
+                    target="_blank"
+                  >
                     <i class="fas fa-code-branch"></i> APP
                   </a>
                 </li>
@@ -100,7 +120,7 @@
       <main class="main">
         <!-- Main content here -->
         <div class="container-fluid px-0 mt-0">
-          <nuxt/>
+          <nuxt />
         </div>
       </main>
     </div>
@@ -112,28 +132,27 @@
 
 <script>
 export default {
-
   mounted() {
-    let token = localStorage.getItem("token")
+    let token = localStorage.getItem("token");
     if (!token) {
-      this.$router.push('/auth/login')
+      this.$router.push("/auth/login");
     }
   },
 
   methods: {
     logout(params) {
-      let env = require('~/const/env.json');
-      let url = env.api_host + '/usuario/logout'
-      let token = localStorage.getItem("token")
-      let self = this
+      let env = require("~/const/env.json");
+      let url = env.api_host + "/usuario/logout";
+      let token = localStorage.getItem("token");
+      let self = this;
 
       this.$axios({
-        method: 'post',
+        method: "post",
         url: url,
-        mode: 'no-cors',
+        mode: "no-cors",
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
         params: {
           access_token: token
@@ -141,32 +160,31 @@ export default {
         withCredentials: false
       })
 
-      .then(function (response) {
-        localStorage.setItem("token", '')
-        localStorage.setItem("userId", '')
-        self.$router.push('/auth/login')
-      })
+        .then(function(response) {
+          localStorage.setItem("token", "");
+          localStorage.setItem("userId", "");
+          self.$router.push("/auth/login");
+        })
 
-      .catch(function (e) {
-        if (e.response) {
-          let error = e.response.data.error
-          let detalles = error.details
-          console.log(error.statusCode)
+        .catch(function(e) {
+          if (e.response) {
+            let error = e.response.data.error;
+            let detalles = error.details;
+            console.log(error.statusCode);
 
-          localStorage.setItem("token", '')
-          localStorage.setItem("userId", '')
-          self.$router.push('/auth/login')
+            localStorage.setItem("token", "");
+            localStorage.setItem("userId", "");
+            self.$router.push("/auth/login");
 
-          self.$toast.error('Error, en validación', {
-            duration: 10000,
-            iconPack: 'fontawesome',
-            icon : 'times'
-          })
-
-        } else {
-          console.log(e)
-        }
-      })
+            self.$toast.error("Error, en validación", {
+              duration: 10000,
+              iconPack: "fontawesome",
+              icon: "times"
+            });
+          } else {
+            console.log(e);
+          }
+        });
     }
   }
 };

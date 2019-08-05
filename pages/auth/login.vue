@@ -116,7 +116,7 @@ export default {
     let env = require("~/const/env.json");
     let token = localStorage.getItem("token");
     let userId = localStorage.getItem("userId");
-    let url = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
+    let urlToken = `${env.api_host}/usuario/${userId}/accessTokens?access_token=${token}`;
     let apiToken = "";
     let self = this;
 

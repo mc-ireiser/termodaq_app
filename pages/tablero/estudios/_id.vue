@@ -388,7 +388,12 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="setFicha()">Guardar</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="setFicha()"
+                      :disabled="guardando"
+                    >Guardar</button>
                   </div>
                 </div>
               </div>
@@ -414,7 +419,12 @@
                   <div class="modal-body">¿Está seguro de eliminar este estudio de forma permanente?</div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" @click="eliminarEstudio()">Eliminar</button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="eliminarEstudio()"
+                      :disabled="eliminando"
+                    >Eliminar</button>
                   </div>
                 </div>
               </div>
@@ -440,6 +450,8 @@ export default {
       ready: false,
       perfil: false,
       edit: false,
+      eliminando: false,
+      guardando: false,
       muestreos_count: 0,
       groupData: [],
       userData: {
@@ -675,7 +687,6 @@ export default {
               uv: []
             };
           }
-          console.log(groups[date]);
           groups[date].tempAir.push(data.tempAir);
           groups[date].tempWater.push(data.tempWater);
           groups[date].pressure.push(data.pressure);
@@ -773,6 +784,7 @@ export default {
 
   methods: {
     async setFicha() {
+      this.guardando = true;
       let env = require("~/const/env.json");
       let token = localStorage.getItem("token");
       let userId = localStorage.getItem("userId");
@@ -795,6 +807,7 @@ export default {
           .$put(urlFicha, self.ficha)
 
           .then(function(response) {
+            self.guardando = false;
             self.ficha = response;
             self.$toast.success("Ficha editada correctamente.", {
               duration: 3500,
@@ -804,6 +817,7 @@ export default {
           })
 
           .catch(function(e) {
+            self.guardando = false;
             if (e.response) {
               let error = e.response.data.error;
               let detalles = error.details;
@@ -823,6 +837,7 @@ export default {
           .$post(urlFicha, self.ficha)
 
           .then(function(response) {
+            self.guardando = false;
             self.ficha = response;
             self._ficha = true;
             self.$toast.success("Ficha creada de manera correcta.", {
@@ -833,6 +848,7 @@ export default {
           })
 
           .catch(function(e) {
+            self.guardando = false;
             if (e.response) {
               let error = e.response.data.error;
               let detalles = error.details;
@@ -858,6 +874,7 @@ export default {
     },
 
     async eliminarEstudio() {
+      this.eliminando = true;
       let env = require("~/const/env.json");
       let token = localStorage.getItem("token");
       let userId = localStorage.getItem("userId");
@@ -883,6 +900,7 @@ export default {
           })
 
           .catch(function(e) {
+            self.eliminando = false;
             if (e.response) {
               let error = e.response.data.error;
               let detalles = error.details;
@@ -903,6 +921,7 @@ export default {
         .$delete(urlDeleteEstudio)
 
         .then(function(response) {
+          self.eliminando = false;
           self.$toast.success("Estudio eliminado.", {
             duration: 3500,
             iconPack: "fontawesome",
@@ -914,6 +933,7 @@ export default {
         })
 
         .catch(function(e) {
+          self.eliminando = false;
           if (e.response) {
             let error = e.response.data.error;
             let detalles = error.details;

@@ -14,33 +14,41 @@
               <div class="card-body p-4">
                 <form @submit.prevent="onSubmit">
                   <div role="group" class="input-group mb-3">
-                    <label for="nombre" class="col-sm-6 col-form-label">Nombre</label>
+                    <label for="nombre" class="col-sm-6 col-form-label pl-0">
+                      <strong>Nombre</strong>
+                    </label>
                     <input
                       type="text"
                       :readonly="!edit"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
-                      class
+                      class="pl-2"
                       id="nombre"
                       v-model="userData.nombre"
                       maxlength="70"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
-                    <label for="apellido" class="col-sm-6 col-form-label">Apellido</label>
+                    <label for="apellido" class="col-sm-6 col-form-label pl-0">
+                      <strong>Apellido</strong>
+                    </label>
                     <input
                       type="text"
                       :readonly="!edit"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
+                      class="pl-2"
                       id="apellido"
                       v-model="userData.apellido"
                       maxlength="70"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
-                    <label for="bio" class="col-sm-6 col-form-label">Bio</label>
+                    <label for="bio" class="col-sm-6 col-form-label pl-0">
+                      <strong>Biografía</strong>
+                    </label>
                     <textarea
                       v-model="userData.bio"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
+                      class="pl-2"
                       :readonly="!edit"
                       type="text"
                       id="bio"
@@ -51,60 +59,74 @@
                     -->
                   </div>
                   <div role="group" class="input-group mb-3">
-                    <label for="telefono" class="col-sm-6 col-form-label">Telefono</label>
+                    <label for="telefono" class="col-sm-6 col-form-label pl-0">
+                      <strong>Teléfono</strong>
+                    </label>
                     <input
                       type="text"
                       :readonly="!edit"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
+                      class="pl-2"
                       id="telefono"
                       v-model="userData.telefono"
                       maxlength="15"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
-                    <label for="institucion" class="col-sm-6 col-form-label">Institución</label>
+                    <label for="institucion" class="col-sm-6 col-form-label pl-0">
+                      <strong>Institución</strong>
+                    </label>
                     <input
                       type="text"
                       :readonly="!edit"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
+                      class="pl-2"
                       id="institucion"
                       v-model="userData.institucion"
                       maxlength="100"
                     />
                   </div>
                   <div role="group" class="input-group mb-3">
-                    <label for="pais" class="col-sm-6 col-form-label">Pais</label>
+                    <label for="pais" class="col-sm-6 col-form-label pl-0">
+                      <strong>País</strong>
+                    </label>
                     <input
                       type="text"
                       :readonly="!edit"
                       :class="edit? 'form-control' : 'form-control-plaintext' "
+                      class="pl-2"
                       id="pais"
                       v-model="userData.pais"
                       maxlength="50"
                     />
                   </div>
                   <hr />
-                  <div class="container">
+                  <div v-if="!edit" class="container">
                     <div class="row">
-                      <div class="col-sm-2">
-                        <label class="switch switch-primary">
-                          <input v-model="edit" type="checkbox" class="switch-input" checked />
-                          <span class="switch-slider"></span>
-                        </label>
-                      </div>
-                      <div class="col-sm">¿Editar la información?</div>
+                      <button
+                        @click="edit = true"
+                        class="btn btn-primary btn-block mt-2"
+                      >Editar los datos</button>
                     </div>
                   </div>
-                  <button
-                    v-if="edit"
-                    type="submit"
-                    class="btn btn-primary btn-block mt-2"
-                  >Guardar cambios</button>
+                  <div v-if="edit" class="container">
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          @click="edit = false"
+                          class="btn btn-secondary btn-block mt-2"
+                        >Cancelar</button>
+                      </div>
+                      <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block mt-2">Guardar</button>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-4">
+          <div class="col-sm-12 col-md-6 px-4">
             <nuxt-link class="nav-link" to="/tablero/estudios/listado">
               <div class="card-body bg-dark p-0 clearfix">
                 <i class="fas fa-vial bg-primary p-4 px-5 font-4xl mr-3 float-left"></i>
