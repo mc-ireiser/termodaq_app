@@ -250,7 +250,6 @@ export default {
         .$post(urlFicha, self.ficha)
 
         .then(function(response) {
-          self.subiendo = false;
           self.$router.push("/tablero/estudios/" + estudioID);
           self.$toast.success("Ficha creada de manera correcta.", {
             duration: 3500,
