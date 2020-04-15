@@ -19,7 +19,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "comma-separated-values": "^3.6.4",
     "nuxt": "^2.0.0",
-    "nuxt-leaflet": "0.0.19",
+    "nuxt-leaflet": "0.0.21",
     "vue-plotly": "^1.0.0"
   },
   "devDependencies": {
