@@ -5,9 +5,9 @@
   "author": "Jesus Rodriguez",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nuxt -H 0.0.0.0",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "nuxt start -H 0.0.0.0",
     "generate": "nuxt generate",
     "heroku-postbuild": "npm run build"
   },
